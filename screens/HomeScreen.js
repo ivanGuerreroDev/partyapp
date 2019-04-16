@@ -1,3 +1,6 @@
+
+
+
 import React from 'react';
 import {
   Image,
@@ -10,13 +13,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import { ExpoLinksView } from '@expo/samples';
 
-import { MonoText } from '../components/StyledText';
-
-export default class HomeScreen extends React.Component {
+export default class LinksScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: null,
   };
 
   render() {
@@ -35,42 +36,12 @@ export default class HomeScreen extends React.Component {
           </View>
 
           <View style={styles.getStartedContainer}>
-            <Text>Pendientes</Text>           
+            <Text>Cotizaciones</Text>           
           </View>
         </ScrollView>
       </View>
     );
   }
-
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text  style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development e is , your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({

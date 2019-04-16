@@ -92,9 +92,9 @@ export default class Login extends Component {
             headers: {
               'Accept':       'application/json',
               'Content-Type': 'application/json'
-            }
+            } 
         } 
-        fetch('https://gopartyperu.herokuapp.com/api/login', data) 
+        fetch('http://192.168.1.10:3000/api/login', data) 
             .then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson);
@@ -111,12 +111,18 @@ export default class Login extends Component {
         return (
                 <View style={styles.loginContainer}>
                     <Image
-                        style={{marginBottom: 30, alignSelf: 'center'}}
+                        style={{
+                            marginBottom: 20, 
+                            alignSelf: 'center', 
+                            width: 100,
+                            height: 80,
+                            resizeMode: 'contain'
+                        }}
                         source={require('../assets/images/logo.png')}
                     />
                     <Text 
-                        style={{fontSize: 20, textAlign: 'center', marginBottom: 15}}>
-                        Iniciar Sesión Proveedores
+                        style={{fontSize: 20, textAlign: 'center', marginBottom: 10}}>
+                        Iniciar Sesión Clientes
                     </Text>
                     <TextInput 
                         style={styles.inputElement}

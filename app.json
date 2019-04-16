@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "goParty",
-    "slug": "goparty",
+    "name": "PartyApp",
+    "slug": "partyapp",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
