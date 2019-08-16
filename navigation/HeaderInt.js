@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import MaterialIcon from '@expo/vector-icons/MaterialIcons';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient'
 import styles from '../assets/styles';
  
 export default class HeaderInt extends React.Component {

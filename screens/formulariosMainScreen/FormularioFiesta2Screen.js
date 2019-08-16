@@ -10,7 +10,7 @@ import {
   Picker,
   TouchableOpacity
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient'
 import DatePicker from 'react-native-datepicker'
 import { RadioButton } from 'react-native-paper';
 import styles from '../../assets/styles';

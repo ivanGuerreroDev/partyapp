@@ -10,7 +10,7 @@ import {
   View,
   TextInput
 } from 'react-native';
-import {LinearGradient} from 'expo';
+import { LinearGradient } from 'expo-linear-gradient'
 import DatePicker from 'react-native-datepicker';
 import FeatherIcon from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';

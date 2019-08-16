@@ -14,7 +14,7 @@ import {
   Modal,
   TouchableWithoutFeedback
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient'
 import IconAntDesign from '@expo/vector-icons/AntDesign';
 import DatePicker from 'react-native-datepicker';
 import { RadioButton   } from 'react-native-paper';

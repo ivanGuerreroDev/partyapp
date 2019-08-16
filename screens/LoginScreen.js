@@ -8,7 +8,8 @@ import {
     Button,
     StyleSheet
 } from 'react-native'; 
-import {LinearGradient, AuthSession} from 'expo';
+import {AuthSession} from 'expo';
+import { LinearGradient } from 'expo-linear-gradient'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Login extends Component {

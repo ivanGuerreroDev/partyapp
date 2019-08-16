@@ -8,8 +8,8 @@ import {
     Button,
     StyleSheet
 } from 'react-native'; 
-import {LinearGradient, AuthSession} from 'expo';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { LinearGradient } from 'expo-linear-gradient'
+
 
 export default class Index extends Component {
   static navigationOptions = {

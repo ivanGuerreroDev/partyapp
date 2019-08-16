@@ -11,7 +11,7 @@ import {
   TextInput,
   Button
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient'
 import styles from '../../assets/styles'; 
 import Header from '../../navigation/Header'; 
 
