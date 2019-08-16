@@ -100,7 +100,7 @@ const estilo = StyleSheet.create({
       paddingVertical: 15, 
       paddingHorizontal: 30, 
       alignItems: 'center', 
-      borderRadius: 30 
+      borderRadius: Platform.OS === 'android' ? 30 : 22 
   },
   inputElement: {
       marginBottom: 10,

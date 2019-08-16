@@ -7,7 +7,8 @@ import {
     View,
     Button,
     StyleSheet,
-    ScrollView
+    ScrollView,
+    Platform
 } from 'react-native';
 import {AuthSession} from 'expo';
 import { LinearGradient } from 'expo-linear-gradient'
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15, 
         paddingHorizontal: 30, 
         alignItems: 'center', 
-        borderRadius: 30 
+        borderRadius: Platform.OS === 'android' ? 30 : 22 
     },
     inputElement: {
         marginBottom: 10,

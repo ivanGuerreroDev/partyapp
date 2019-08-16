@@ -6,7 +6,8 @@ import {
     TouchableOpacity,
     View,
     Button,
-    StyleSheet
+    StyleSheet,
+    Platform
 } from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -74,13 +75,13 @@ const styles = StyleSheet.create({
   },
   button:{
     marginBottom: 20,
-    width: 200
+    width: 200,
   },
   gradientButton: {
     paddingVertical: 15, 
     paddingHorizontal: 30, 
     alignItems: 'center', 
-    borderRadius: 30 
+    borderRadius: Platform.OS === 'android' ? 30 : 22 
   },
   inputElement: {
       marginBottom: 10,
