@@ -10,7 +10,9 @@ import {
   PickerIOS,
   TouchableOpacity,
   TextInput,
-  Button
+  Button,
+  Modal,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import IconAntDesign from '@expo/vector-icons/AntDesign';
@@ -20,7 +22,7 @@ import ValidationComponent from 'react-native-form-validator';
 import styles from '../../assets/styles'; 
 import Header from '../../navigation/Header'; 
 import { Dropdown } from 'react-native-material-dropdown';
-
+import * as Animatable from 'react-native-animatable';
 var distritos = require('../../datos/peruGeo/distritos.json');
 var limaArr= distritos['3927'];
 
