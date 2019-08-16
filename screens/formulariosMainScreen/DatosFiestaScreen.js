@@ -504,17 +504,26 @@ export default class DatosFiestaScreen extends ValidationComponent  {
                 <View style={{height:80}}></View>      
               </View>    
             </ScrollView>
-            <View style={this.state.errorPopup?styles.popup:styles.novisible}>
-              <View style={styles.popupContent}>
-                  <TouchableOpacity 
-                    style={styles.cerrarPopup}  
-                    onPress={()=>this.setState({errorPopup: false})}
-                  >
-                    <Text style={{color:'#fff'}}>X</Text>
-                  </TouchableOpacity>
-                    {this.state.errorPopupTexto.map(function(mensaje) { return <Text style={{color:'#ff2222', fontSize: 10, marginBottom: 15}}>- {mensaje}</Text>})}
-              </View>
-            </View>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.state.modal}>
+                  <TouchableWithoutFeedback onPress={()=>this.setState({errorPopup: false})}>
+                  <Animatable.View animation={'fadeIn'}
+                  style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <TouchableOpacity style={styles.cerrarPopup}  
+                            onPress={()=>this.setState({errorPopup: false})}>
+                            <Text style={{color:'#fff'}}>X</Text>
+                        </TouchableOpacity> 
+                        {
+                            this.state.errorPopupTexto.map(function(mensaje) { return <Text style={{color:'#ff2222', fontSize: 10, marginBottom: 15}}>- {mensaje}</Text>})
+                        }
+                    </View>
+                  </Animatable.View>
+                  </TouchableWithoutFeedback>
+                </Modal>   
+
           </View>
       );
     }else{

@@ -10,15 +10,19 @@ import {
   PickerIOS,
   TouchableOpacity,
   TextInput,
-  Button
+  Button,
+  Modal,
+  TouchableHighlight,
+  TouchableWithoutFeedback
 } from 'react-native'; 
-import { LinearGradient } from 'expo-linear-gradient';
-import { Modal, Portal, Provider, Checkbox, RadioButton  } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient'
+import {  Portal, Provider, Checkbox, RadioButton  } from 'react-native-paper';
 import HeaderFormulario from '../../navigation/HeaderFormulario'; 
 import FormularioSteps from '../../navigation/FormularioSteps'; 
 import styles from '../../assets/styles'; 
 import IconAntDesign from '@expo/vector-icons/AntDesign';
 import { Dropdown } from 'react-native-material-dropdown';
+import * as Animatable from 'react-native-animatable';
 
 var categorias = require('../../datos/categoriasFormulario.json');
 
@@ -93,9 +97,11 @@ export default class FormularioFiestaScreen extends React.Component  {
         servicioParrillero: new Object,
         carnes: new Object
       },
+      modal:false,
     };
   }
   
+
   render() {
     if(!this.state.isLoading){
       const checkboxes = this.state.checkboxes;
@@ -110,6 +116,7 @@ export default class FormularioFiestaScreen extends React.Component  {
               tipoFiesta: ()=>this.state.datosFiesta.tipoFiesta,
             }} 
           />
+          
           <ScrollView>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
               <View style={{justifyContent: 'center', flexDirection: 'row'}}>
@@ -2497,94 +2504,110 @@ export default class FormularioFiestaScreen extends React.Component  {
             }}
           />
 
+  
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.state.modal}>
+                  <TouchableWithoutFeedback onPress={()=>this.setState({modal: false})}>
+                  <Animatable.View animation={'fadeIn'}
+                  style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <TouchableOpacity style={styles.cerrarPopup}  
+                            onPress={()=>this.setState({modal: false})}>
+                            <Text style={{color:'#fff'}}>X</Text>
+                        </TouchableOpacity> 
+                        {
+                            this.state.errorPopupTexto.map(function(mensaje) { return <Text style={{color:'#ff2222', fontSize: 10, marginBottom: 15}}>- {mensaje}</Text>})
+                        }
+                    </View>
+                  </Animatable.View>
+                  </TouchableWithoutFeedback>
+                </Modal>   
 
-          <View style={this.state.errorPopup?styles.popup:styles.novisible}>
-            <View style={styles.popupContent}>
-                <TouchableOpacity 
-                  style={styles.cerrarPopup}  
-                  onPress={()=>this.setState({errorPopup: false})}
-                >
-                  <Text style={{color:'#fff'}}>X</Text>
-                </TouchableOpacity> 
-                  {
-                    
-                        this.state.errorPopupTexto.map(function(mensaje) { return <Text style={{color:'#ff2222', fontSize: 10, marginBottom: 15}}>- {mensaje}</Text>})
-                    
-                    
-                  }
-            </View>
-          </View>
+                <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.state.popupCheckForm}>
+                  <TouchableWithoutFeedback onPress={()=>this.setState({popupCheckForm: false})}>
+                  <Animatable.View animation={'fadeIn'}
+                  style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <TouchableOpacity style={styles.cerrarPopup}  
+                            onPress={()=>this.setState({popupCheckForm: false})}>
+                            <Text style={{color:'#fff'}}>X</Text>
+                        </TouchableOpacity> 
+                        <Text style={{fontSize:22, marginBottom:30}}>Dale check a todos los servicios que quieras cotizar</Text>
+                        <View style={{alignSelf: 'center', justifyContent: 'center', marginTop: 50}}>
+                          <TouchableOpacity
+                            style={estilo.button}
+                            onPress={()=>this._entendido_popupCheckForm()}
+                          >
+                            <LinearGradient
+                              colors={['#C63275', '#8F4D93']}
+                              start={[1,1]}
+                              end={[0,0]}
+                              style={estilo.gradientButton}>
+                              <Text style={{
+                                fontWeight: '700',
+                                color: '#fff'
+                              }}>ENTENDIDO</Text>
+                            </LinearGradient>
+                          </TouchableOpacity>
+                        </View>
+                    </View>
+                  </Animatable.View>
+                  </TouchableWithoutFeedback>
+                </Modal>   
 
-          <View style={this.state.popupCheckForm?styles.popup:styles.novisible} >
-            <View style={styles.popupContent}>
-              <Text style={{fontSize:22, marginBottom:30}}>Dale check a todos los servicios que quieras cotizar</Text>
-              <View style={{alignSelf: 'center', justifyContent: 'center', marginTop: 50}}>
-                <TouchableOpacity
-                  style={estilo.button}
-                  onPress={()=>this._entendido_popupCheckForm()}
-                >
-                  <LinearGradient
-                    colors={['#C63275', '#8F4D93']}
-                    start={[1,1]}
-                    end={[0,0]}
-                    style={estilo.gradientButton}>
-                    <Text style={{
-                      fontWeight: '700',
-                      color: '#fff'
-                    }}>ENTENDIDO</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[estilo.button,{marginBottom:20}]}
-                  onPress={()=>this.setState({popupCheckForm: false})}
-                >
-                  <View
-                  style={[estilo.gradientButton, {backgroundColor: '#E9E9E9'}]}>
-                    <Text style={{
-                        fontWeight: '700',
-                        color: '#333'
-                    }}>CERRAR</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          
-          <View style={this.state.popupInputMesagge?styles.popup:styles.novisible}>
-            <View style={styles.popupContent}>
-            <Text style={{fontSize:22, marginBottom:30}}>Dale check a todos los servicios que quieras cotizar</Text>
-              <View style={{alignSelf: 'center', justifyContent: 'center', marginTop: 50}}>
-                <TouchableOpacity
-                  style={estilo.button}
-                  onPress={()=>this._entendido_popupInputMessage()}
-                >
-                  <LinearGradient
-                    colors={['#C63275', '#8F4D93']}
-                    start={[1,1]}
-                    end={[0,0]}
-                    style={estilo.gradientButton}>
-                    <Text style={{
-                      fontWeight: '700',
-                      color: '#fff'
-                    }}>ENTENDIDO</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[estilo.button,{marginBottom:20}]}
-                  onPress={()=>this.setState({popupInputMessage: false})}
-                >
-                  <View
-                  style={[estilo.gradientButton, {backgroundColor: '#E9E9E9'}]}>
-                    <Text style={{
-                        fontWeight: '700',
-                        color: '#333'
-                    }}>CERRAR</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+                <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.state.popupInputMesagge}>
+                  <TouchableWithoutFeedback onPress={()=>this.setState({popupInputMesagge: false})}>
+                  <Animatable.View animation={'fadeIn'}
+                  style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <TouchableOpacity style={styles.cerrarPopup}  
+                            onPress={()=>this.setState({popupInputMesagge: false})}>
+                            <Text style={{color:'#fff'}}>X</Text>
+                        </TouchableOpacity> 
+                        <Text style={{fontSize:22, marginBottom:30}}>Dale check a todos los servicios que quieras cotizar</Text>
+                        <View style={{alignSelf: 'center', justifyContent: 'center', marginTop: 50}}>
+                          <TouchableOpacity
+                            style={estilo.button}
+                            onPress={()=>this._entendido_popupInputMessage()}
+                          >
+                            <LinearGradient
+                              colors={['#C63275', '#8F4D93']}
+                              start={[1,1]}
+                              end={[0,0]}
+                              style={estilo.gradientButton}>
+                              <Text style={{
+                                fontWeight: '700',
+                                color: '#fff'
+                              }}>ENTENDIDO</Text>
+                            </LinearGradient>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={[estilo.button,{marginBottom:20}]}
+                            onPress={()=>this.setState({popupInputMessage: false})}
+                          >
+                            <View
+                            style={[estilo.gradientButton, {backgroundColor: '#E9E9E9'}]}>
+                              <Text style={{
+                                  fontWeight: '700',
+                                  color: '#333'
+                              }}>CERRAR</Text>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
                  
-            </View>
-          </View>
+                    </View>
+                  </Animatable.View>
+                  </TouchableWithoutFeedback>
+                </Modal>   
+          
           
         </View>
 
@@ -2729,9 +2752,13 @@ export default class FormularioFiestaScreen extends React.Component  {
 
   errorPopup = (errors) =>{
     
-
-    this.state.errorPopupTexto = errors;
-    this.setState({errorPopup : true});
+    
+    //this.state.errorPopupTexto = errors;
+    //this.setState({errorPopup : true});
+    this.setState({
+      errorPopupTexto:errors,
+      modal:true
+    })
   }
 
   _filmacionFotografiaSelect = () =>{

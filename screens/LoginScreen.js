@@ -84,8 +84,8 @@ export default class Login extends Component {
     }
     Login = async () => {
         this.props.screenProps.cargando();
-        //fetch('https://gopartyperu.herokuapp.com/api/users/login', 
-        fetch('http://192.168.1.22:3000/api/users/login', 
+        fetch('https://gopartyperu.herokuapp.com/api/users/login', 
+        //fetch('http://192.168.1.22:3000/api/users/login', 
         {
             method: 'POST',
             headers: {

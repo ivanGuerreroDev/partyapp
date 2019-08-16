@@ -137,6 +137,19 @@ export default StyleSheet.create({
     right: -15
   },
 
+  //modal styles
+  modalContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.60)'
+  },
+  modalContent:{
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+
 
   //inputs
   formContainer: {
