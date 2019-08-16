@@ -16,7 +16,7 @@ import {
   TouchableWithoutFeedback
 } from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient'
-import {  Portal, Provider, Checkbox, RadioButton  } from 'react-native-paper';
+import {  Portal, Provider, Checkbox, RadioButton , Switch  } from 'react-native-paper';
 import HeaderFormulario from '../../navigation/HeaderFormulario'; 
 import FormularioSteps from '../../navigation/FormularioSteps'; 
 import styles from '../../assets/styles'; 
@@ -137,10 +137,18 @@ export default class FormularioFiestaScreen extends React.Component  {
               
               <View style={this._itemsCheck('animacion', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                    <Checkbox
-                      status={checkboxes.animacion ? 'checked' : 'unchecked'}
-                      onPress={() => this._Checkbox('animacion')}
-                    /> 
+                    {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                        status={checkboxes.animacion ? 'checked' : 'unchecked'}
+                        onPress={() => this._Checkbox('animacion')}
+                      /> :
+                      <Switch
+                        value={checkboxes.animacion}
+                        onValueChange={() => this._Checkbox('animacion') }
+                      />
+                    }
+
                   <Text style={{fontSize: 20}}>Animación</Text>
                 </View>
                 <View style={checkboxes.animacion==true?styles.visible:styles.novisible}>
@@ -184,18 +192,34 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('horaLoca', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
-                    status={checkboxes.horaLoca ? 'checked' : 'unchecked'}
-                    onPress={() => this._Checkbox('horaLoca')}
-                  /> 
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={checkboxes.horaLoca ? 'checked' : 'unchecked'}
+                      onPress={() => this._Checkbox('horaLoca')}
+                      />  :
+                      <Switch
+                        value={checkboxes.horaLoca}
+                        onValueChange={() => this._Checkbox('horaLoca') }
+                      />
+                    }
+
                   <Text style={{fontSize: 20}}>Hora Loca</Text>
                 </View>
                 <View style={checkboxes.horaLoca==true?styles.visible:styles.novisible}>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.horaLoca.cotillon ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("horaLoca","cotillon")}
-                    /><Text>Cotillon</Text>  
+                    /> :
+                      <Switch
+                        value={cthis.state.inputs.horaLoca.cotillon}
+                        onValueChange={() => this._CheckboxInput("horaLoca","cotillon") }
+                      />
+                    }
+                    <Text>Cotillon</Text>  
                     <View style={{position:'relative', width: 30, height: 60}}>
                       <TouchableOpacity 
                         style={styles.errorForm}
@@ -211,10 +235,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                                     
                   </View>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.horaLoca.tema ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("horaLoca","tema")}
-                    /><Text style={{marginRight: 20}}>Tema</Text>  
+                    /> :
+                      <Switch
+                        value={this.state.inputs.horaLoca.tema}
+                        onValueChange={() => this._CheckboxInput("horaLoca","tema") }
+                      />
+                    }
+                   <Text style={{marginRight: 20}}>Tema</Text>  
                     <Dropdown
                       style={{width:100}}
                       label='seleccionar tema'
@@ -279,19 +311,36 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('pinateria', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
-                    status={checkboxes.pinateria ? 'checked' : 'unchecked'}
-                    onPress={() => this._Checkbox('pinateria')}
-                  /> 
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={checkboxes.pinateria ? 'checked' : 'unchecked'}
+                      onPress={() => this._Checkbox('pinateria')}
+                    /> :
+                      <Switch
+                        value={checkboxes.pinateria}
+                        onValueChange={() => this._Checkbox('pinateria') }
+                      />
+                    }
+
                   <Text style={{fontSize: 20}}>Piñatería</Text>
                 </View>
                 <View style={checkboxes.pinateria==true?styles.visible:styles.novisible}>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.pinateria.tema ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("pinateria","tema")}
                       color="#c63275"
-                    /><Text style={{marginRight: 20}}>Tema</Text> 
+                    /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.tema }
+                        onValueChange={() => this._CheckboxInput("pinateria","tema")}
+                        color="#c63275"
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Tema</Text> 
                     <Dropdown
                       style={{width:100}}
                       label='seleccionar tema'
@@ -311,83 +360,173 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.pinateria.globos ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("pinateria","globos")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Pack de globos</Text> 
+                      />:
+                      <Switch
+                        value={this.state.inputs.pinateria.globos}
+                        onValueChange={() => this._CheckboxInput("pinateria","globos") }
+                        color="#c63275"
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Pack de globos</Text> 
                     </View>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
-                        status={this.state.inputs.pinateria.adornosTecho ? 'checked' : 'unchecked'}
-                        onPress={() => this._CheckboxInput("pinateria","adornosTecho")}
+                      status={this.state.inputs.pinateria.adornosTecho ? 'checked' : 'unchecked'}
+                      onPress={() => this._CheckboxInput("pinateria","adornosTecho")}
+                      color="#c63275"
+                    /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.adornosTecho}
+                        onValueChange={() => this._CheckboxInput("pinateria","adornosTecho") }
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Adornos Techo</Text> 
+                      />
+                    }
+                     <Text style={{marginRight: 20}}>Adornos Techo</Text> 
                     </View>
                     
                   </View>
                   <View style={estilo.row}>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.pinateria.pinata ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("pinateria","pinata")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Piñata</Text> 
+                      /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.pinata}
+                        onValueChange={() => this._CheckboxInput("pinateria","pinata") }
+                        color="#c63275"
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Piñata</Text> 
                     </View>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.pinateria.girnaldas ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("pinateria","girnaldas")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Girnaldas</Text> 
+                      />:
+                      <Switch
+                        value={this.state.inputs.pinateria.girnaldas}
+                        onValueChange={() => this._CheckboxInput("pinateria","girnaldas") }
+                        color="#c63275"
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Girnaldas</Text> 
                     </View>
                   </View>
                   <View style={estilo.row}>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.pinateria.sorpresas ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("pinateria","sorpresas")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Sorpresas</Text> 
+                      /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.sorpresas}
+                        onValueChange={() =>this._CheckboxInput("pinateria","sorpresas")}
+                        color="#c63275"
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Sorpresas</Text> 
                     </View>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.pinateria.letrero ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("pinateria","letrero")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Letrero / Banner de tu evento</Text> 
+                      /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.letrero}
+                        onValueChange={() => this._CheckboxInput("pinateria","letrero") }
+                        color="#c63275"
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Letrero / Banner de tu evento</Text> 
                     </View>                    
                   </View>
                   <View style={estilo.row}>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.pinateria.bolsaTorta ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("pinateria","bolsaTorta")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Caja / Bolsa {"\n"}de torta</Text> 
+                      /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.bolsaTorta}
+                        onValueChange={() => this._CheckboxInput("pinateria","bolsaTorta")}
+                        color="#c63275"
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Caja / Bolsa {"\n"}de torta</Text> 
                     </View>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
-                        status={this.state.inputs.pinateria.vasos ? 'checked' : 'unchecked'}
-                        onPress={() => this._CheckboxInput("pinateria","vasos")}
+                      status={this.state.inputs.pinateria.vasos ? 'checked' : 'unchecked'}
+                      onPress={() => this._CheckboxInput("pinateria","vasos")}
+                      color="#c63275"
+                    /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.vasos}
+                        onValueChange={() => this._CheckboxInput("pinateria","vasos") }
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Vasos</Text> 
+                      />
+                    }
+                     <Text style={{marginRight: 20}}>Vasos</Text> 
                     </View>
                   </View>
                   <View style={estilo.row}>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.pinateria.servilletas ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("pinateria","servilletas")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Servilletas</Text> 
+                      /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.servilletas }
+                        onValueChange={() => this._CheckboxInput("pinateria","servilletas")}
+                        color="#c63275"
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Servilletas</Text> 
                     </View>
                     <View style={{width:150, flexDirection:'row', alignItems:'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
-                        status={this.state.inputs.pinateria.accesoriosPinata ? 'checked' : 'unchecked'}
-                        onPress={() => this._CheckboxInput("pinateria","accesoriosPinata")}
+                      status={this.state.inputs.pinateria.accesoriosPinata ? 'checked' : 'unchecked'}
+                      onPress={() => this._CheckboxInput("pinateria","accesoriosPinata")}
+                      color="#c63275"
+                    /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.accesoriosPinata}
+                        onValueChange={() => this._CheckboxInput("pinateria","accesoriosPinata")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Accesorios {"\n"}de Piñata</Text> 
+                      />
+                    }
+                     <Text style={{marginRight: 20}}>Accesorios {"\n"}de Piñata</Text> 
                     </View>
                     
                   </View>
@@ -401,11 +540,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width:120, flexDirection: 'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
-                        status={this.state.inputs.pinateria.dulces ? 'checked' : 'unchecked'}
-                        onPress={() => this._CheckboxInput("pinateria","dulces")}
+                      status={this.state.inputs.pinateria.dulces ? 'checked' : 'unchecked'}
+                      onPress={() => this._CheckboxInput("pinateria","dulces")}
+                      color="#c63275"
+                    /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.dulces}
+                        onValueChange={() => this._CheckboxInput("pinateria","dulces")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Dulces</Text> 
+                      />
+                    }
+                     <Text style={{marginRight: 20}}>Dulces</Text> 
                     </View>
                     <View style={{width:80, marginRight:10, flexDirection: 'row', alignItems: 'center'}}>
                       <TextInput
@@ -428,11 +576,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width:120, flexDirection: 'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
-                        status={this.state.inputs.pinateria.jugueteria ? 'checked' : 'unchecked'}
-                        onPress={() => this._CheckboxInput("pinateria","jugueteria")}
+                      status={this.state.inputs.pinateria.jugueteria ? 'checked' : 'unchecked'}
+                      onPress={() => this._CheckboxInput("pinateria","jugueteria")}
+                      color="#c63275"
+                    /> :
+                      <Switch
+                        value={this.state.inputs.pinateria.jugueteria}
+                        onValueChange={() =>  this._CheckboxInput("pinateria","jugueteria") }
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Jugueteria</Text> 
+                      />
+                    }
+                     <Text style={{marginRight: 20}}>Jugueteria</Text> 
                     </View>
                     <View style={{width:80, marginRight:10, flexDirection: 'row', alignItems: 'center'}}>
                       <TextInput
@@ -483,10 +640,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
                <View style={this._itemsCheck('recuerdos', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
-                    status={checkboxes.recuerdos ? 'checked' : 'unchecked'}
-                    onPress={() => this._Checkbox('recuerdos')}
-                  /> 
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={checkboxes.recuerdos ? 'checked' : 'unchecked'}
+                      onPress={() => this._Checkbox('recuerdos')}
+                    /> :
+                      <Switch
+                        value={heckboxes.recuerdos}
+                        onValueChange={() => this._Checkbox('recuerdos') }
+                      />
+                    }
+  
                   <Text style={{fontSize: 20}}>Recuerdos</Text>
                 </View>
                 <View style={checkboxes.recuerdos==true?styles.visible:styles.novisible}>
@@ -575,23 +740,47 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('filmacionFotografia', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
-                    status={checkboxes.filmacionFotografia ? 'checked' : 'unchecked'}
-                    onPress={() => this._Checkbox('filmacionFotografia')}
-                  /> 
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={checkboxes.filmacionFotografia ? 'checked' : 'unchecked'}
+                      onPress={() => this._Checkbox('filmacionFotografia')}
+                    />  :
+                      <Switch
+                        value={checkboxes.filmacionFotografia }
+                        onValueChange={() => this._Checkbox('filmacionFotografia')}
+                      />
+                    }
+
                   <Text style={{fontSize: 20}}>Filmación y Fotografia</Text>
                 </View>
                 <View style={checkboxes.filmacionFotografia==true?styles.visible:styles.novisible}>
                   
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.filmacionFotografia.filmacion ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("filmacionFotografia","filmacion")}
-                    /><Text style={{marginRight: 20}}>Filmación</Text>  
-                    <Checkbox
+                    /> :
+                      <Switch
+                        value={this.state.inputs.filmacionFotografia.filmacion}
+                        onValueChange={() => this._CheckboxInput("filmacionFotografia","filmacion") }
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Filmación</Text>  
+                    {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.filmacionFotografia.fotografia ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("filmacionFotografia","fotografia")}
-                    /><Text style={{marginRight: 20}}>Fotografía</Text>  
+                    />:
+                      <Switch
+                        value={this.state.inputs.filmacionFotografia.fotografia}
+                        onValueChange={() => this._CheckboxInput("filmacionFotografia","fotografia") }
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Fotografía</Text>  
                                 
                   </View>
                 
@@ -620,10 +809,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                     </View>
                   </View>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.filmacionFotografia.sinLimite ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("filmacionFotografia","sinLimite")}
-                    /><Text style={{marginRight: 20}}>No especificar costo límite</Text> 
+                    /> :
+                      <Switch
+                        value={this.state.inputs.filmacionFotografia.sinLimite}
+                        onValueChange={() => this._CheckboxInput("filmacionFotografia","sinLimite")}
+                      />
+                    }
+                   <Text style={{marginRight: 20}}>No especificar costo límite</Text> 
                   </View>
                   <View style={this.state.inputs.filmacionFotografia.sinLimite?estilo.row:styles.novisible}>
                     <Text style={{fontSize:11, color:'#cbcbcb'}}>Recibirás cotizaciones de todo precio para este servicio</Text> 
@@ -658,10 +855,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('catering', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                    <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={checkboxes.catering ? 'checked' : 'unchecked'}
                       onPress={() => this._Checkbox('catering')}
-                    /> 
+                    />  :
+                      <Switch
+                        value={checkboxes.catering}
+                        onValueChange={() => this._Checkbox('catering')}
+                      />
+                    }
+                    
                   <Text style={{fontSize: 20}}>Catering</Text>
                 </View>
                 <View style={checkboxes.catering==true?styles.visible:styles.novisible}>
@@ -691,10 +896,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                     </View>
                   </View>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.catering.sinLimite ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("catering","sinLimite")}
-                    /><Text style={{marginRight: 20}}>No especificar costo límite</Text> 
+                    /> :
+                      <Switch
+                        value={this.state.inputs.catering.sinLimite }
+                        onValueChange={() => this._CheckboxInput("catering","sinLimite")}
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>No especificar costo límite</Text> 
                   </View>
                   <View style={this.state.inputs.catering.sinLimite?estilo.row:styles.novisible}>
                     <Text style={{fontSize:12, color:'#cbcbcb'}}>Recibirás cotizaciones de todo precio para este servicio</Text> 
@@ -789,34 +1002,69 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('brindis', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.brindis ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('brindis')}
-                  /> 
+                  />  :
+                      <Switch
+                        value={checkboxes.brindis}
+                        onValueChange={() => this._Checkbox('brindis') }
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Bebidas / Brindis</Text>
                 </View>
                 <View style={checkboxes.brindis==true?styles.visible:styles.novisible}>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.brindis.conAlcohol ? 'checked' : 'unchecked'}
                       color='#c63275'
                       onPress={() => this._CheckboxInput("brindis","conAlcohol")}
-                    /><Text style={{marginRight: 20}}>Con Alcohol</Text>
+                    /> :
+                      <Switch
+                        value={this.state.inputs.brindis.conAlcohol}
+                        onValueChange={() => this._CheckboxInput("brindis","conAlcohol") }
+                        color='#c63275'
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Con Alcohol</Text>
                   </View>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.brindis.sinAlcohol ? 'checked' : 'unchecked'}
                       color='#c63275'
                       onPress={() => this._CheckboxInput("brindis","sinAlcohol")}
-                    /><Text style={{marginRight: 20}}>Sin Alcohol</Text>
+                    /> :
+                      <Switch
+                        value={this.state.inputs.brindis.sinAlcohol}
+                        onValueChange={() => this._CheckboxInput("brindis","sinAlcohol")}
+                        color='#c63275'
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Sin Alcohol</Text>
                     
                   </View>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.brindis.barraDeDar ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("brindis","barraDeDar")}
                       color='#c63275'
-                    /><Text style={{marginRight: 20}}>Barra de dar</Text>
+                    /> :
+                      <Switch
+                        value={this.state.inputs.brindis.barraDeDar}
+                        onValueChange={() => this._CheckboxInput("brindis","barraDeDar")}
+                        color='#c63275'
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Barra de dar</Text>
                   </View>
                   <View style={this.state.inputs.brindis.conAlcohol?estilo.row:styles.novisible}>
                       <Text style={{textAlign: 'center', flex:1}}>Con Alcohol</Text>
@@ -832,11 +1080,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                   <View style={this.state.inputs.brindis.conAlcohol?styles.visible:styles.novisible}>
                     <View style={estilo.row}>
                       <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           color='#c63275'
                           status={this.state.inputs.brindis.whisky ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("brindis","whisky")}
-                        /><Text style={{marginRight: 20}}>Whisky (750ml)</Text>
+                        /> :
+                      <Switch
+                        color='#c63275'
+                        value={this.state.inputs.brindis.whisky}
+                        onValueChange={() => this._CheckboxInput("brindis","whisky")}
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Whisky (750ml)</Text>
                       </View>
                       <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                         <View style={{flex:1, padding:3}}>
@@ -861,11 +1118,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                   <View style={this.state.inputs.brindis.conAlcohol?styles.visible:styles.novisible}>
                     <View style={estilo.row}>
                       <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           color='#c63275'
                           status={this.state.inputs.brindis.ron ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("brindis","ron")}
-                        /><Text style={{marginRight: 20}}>Ron (1L)</Text>
+                        /> :
+                      <Switch
+                      color='#c63275'
+                        value={this.state.inputs.brindis.ron }
+                        onValueChange={() => this._CheckboxInput("brindis","ron") }
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Ron (1L)</Text>
                       </View>
                       <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                         <View style={{flex:1, padding:3}}>
@@ -890,11 +1156,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                   <View style={this.state.inputs.brindis.conAlcohol?styles.visible:styles.novisible}>
                     <View style={estilo.row}>
                       <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           color='#c63275'
                           status={this.state.inputs.brindis.pisco ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("brindis","pisco")}
-                        /><Text style={{marginRight: 20}}>Pisco (1L)</Text>
+                        />:
+                      <Switch
+                        value={this.state.inputs.brindis.pisco}
+                        onValueChange={() => this._CheckboxInput("brindis","pisco")}
+                        color='#c63275'
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Pisco (1L)</Text>
                       </View>
                       <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                         <View style={{flex:1, padding:3}}>
@@ -920,11 +1195,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                     
                     <View style={estilo.row}>
                       <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           color='#c63275'
                           status={this.state.inputs.brindis.tequila ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("brindis","tequila")}
-                        /><Text style={{marginRight: 20}}>Tequila (1L)</Text>
+                        /> :
+                      <Switch
+                        value={this.state.inputs.brindis.tequila }
+                        onValueChange={() => this._CheckboxInput("brindis","tequila")}
+                        color='#c63275'
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Tequila (1L)</Text>
                       </View>
                       <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                         <View style={{flex:1, padding:3}}>
@@ -949,11 +1233,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                   <View style={this.state.inputs.brindis.conAlcohol?styles.visible:styles.novisible}>
                     <View style={estilo.row}>
                       <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           color='#c63275'
                           status={this.state.inputs.brindis.ginebra ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("brindis","ginebra")}
-                        /><Text style={{marginRight: 20}}>Ginebra (1L)</Text>
+                        />:
+                      <Switch
+                      color='#c63275'
+                        value={this.state.inputs.brindis.ginebra}
+                        onValueChange={() => this._CheckboxInput("brindis","ginebra") }
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Ginebra (1L)</Text>
                       </View>
                       <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                         <View style={{flex:1, padding:3}}>
@@ -978,11 +1271,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                   <View style={this.state.inputs.brindis.conAlcohol?styles.visible:styles.novisible}>
                     <View style={estilo.row}>
                       <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
-                        <Checkbox
-                          color='#c63275'
-                          status={this.state.inputs.brindis.vinos ? 'checked' : 'unchecked'}
-                          onPress={() => this._CheckboxInput("brindis","vinos")}
-                        /><Text style={{marginRight: 20}}>Vinos (750ml)</Text>
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      color='#c63275'
+                      status={this.state.inputs.brindis.vinos ? 'checked' : 'unchecked'}
+                      onPress={() => this._CheckboxInput("brindis","vinos")}
+                    /> :
+                      <Switch
+                      color='#c63275'
+                        value={this.state.inputs.brindis.vinos }
+                        onValueChange={() => this._CheckboxInput("brindis","vinos") }
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Vinos (750ml)</Text>
                       </View>
                       <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                         <View style={{flex:1, padding:3}}>
@@ -1018,11 +1320,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                   <View style={this.state.inputs.brindis.conAlcohol?styles.visible:styles.novisible}>
                     <View style={estilo.row}>
                       <View style={{width: 120, flexDirection:'row', alignItems: 'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           color='#c63275'
                           status={this.state.inputs.brindis.cerveza ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("brindis","cerveza")}
-                        /><Text style={{marginRight: 20}}>Cerveza</Text>
+                        /> :
+                      <Switch
+                      color='#c63275'
+                        value={this.state.inputs.brindis.cerveza}
+                        onValueChange={() => this._CheckboxInput("brindis","cerveza") }
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Cerveza</Text>
                       </View>
                       <View style={{width: 180, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                         <View style={{flex:1, padding:3}}>
@@ -1057,25 +1368,52 @@ export default class FormularioFiestaScreen extends React.Component  {
                       <Text style={{textAlign: 'center', flex:1}}>Sin Alcohol</Text>
                     </View>
                     <View style={estilo.row}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         color='#c63275'
                         status={this.state.inputs.brindis.agua ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("brindis","agua")}
-                      /><Text style={{marginRight: 20}}>Agua</Text>
+                      /> :
+                      <Switch
+                      color='#c63275'
+                        value={this.state.inputs.brindis.agua}
+                        onValueChange={() => this._CheckboxInput("brindis","agua")}
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Agua</Text>
                     </View>
                     <View style={estilo.row}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         color='#c63275'
                         status={this.state.inputs.brindis.gaseosa ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("brindis","gaseosa")}
-                      /><Text style={{marginRight: 20}}>Gaseosa</Text>
+                      /> :
+                      <Switch
+                      color='#c63275'
+                        value={this.state.inputs.brindis.gaseosa}
+                        onValueChange={() => this._CheckboxInput("brindis","gaseosa") }
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Gaseosa</Text>
                     </View>
                     <View style={estilo.row}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         color='#c63275'
                         status={this.state.inputs.brindis.gingerale ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("brindis","gingerale")}
-                      /><Text style={{marginRight: 20}}>Ginger ale</Text>
+                      /> :
+                      <Switch
+                      color='#c63275'
+                        value={this.state.inputs.brindis.gingerale}
+                        onValueChange={() => this._CheckboxInput("brindis","gingerale")}
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Ginger ale</Text>
                     </View>
                   </View>
                   <View style={estilo.row}>
@@ -1106,10 +1444,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('foodTruck', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.foodTruck ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('foodTruck')}
-                  /> 
+                  />  :
+                      <Switch
+                        value={checkboxes.foodTruck}
+                        onValueChange={() => this._Checkbox('foodTruck')}
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Food Truck and Snacks</Text>
                 </View>
                 <View style={checkboxes.foodTruck==true?styles.visible:styles.novisible}>
@@ -1123,10 +1469,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.foodTruck.sanguches ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("foodTruck","sanguches")}
-                      /><Text style={{marginRight: 20}}>Sanguches</Text>
+                      /> :
+                      <Switch
+                        value={this.state.inputs.foodTruck.sanguches}
+                        onValueChange={() => this._CheckboxInput("foodTruck","sanguches") }
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Sanguches</Text>
                     </View>
                     <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1149,10 +1503,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.foodTruck.comidaChina ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("foodTruck","comidaChina")}
-                      /><Text style={{marginRight: 20}}>Comida China</Text>
+                      /> :
+                      <Switch
+                        value={this.state.inputs.foodTruck.comidaChina}
+                        onValueChange={() => this._CheckboxInput("foodTruck","comidaChina") }
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Comida China</Text>
                     </View>
                     <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1175,10 +1537,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.foodTruck.carnes ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("foodTruck","carnes")}
-                      /><Text style={{marginRight: 20}}>Carnes</Text>
+                      />:
+                      <Switch
+                        value={this.state.inputs.foodTruck.carnes}
+                        onValueChange={() => this._CheckboxInput("foodTruck","carnes")}
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Carnes</Text>
                     </View>
                     <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1201,10 +1571,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.foodTruck.salchipapa ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("foodTruck","salchipapa")}
-                      /><Text style={{marginRight: 20}}>Salchipapa</Text>
+                      /> :
+                      <Switch
+                        value={this.state.inputs.foodTruck.salchipapa}
+                        onValueChange={() => this._CheckboxInput("foodTruck","salchipapa")}
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Salchipapa</Text>
                     </View>
                     <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1227,10 +1605,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 150, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.foodTruck.platos ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("foodTruck","platos")}
-                      /><Text style={{marginRight: 20}}>Platos</Text>
+                      />:
+                      <Switch
+                        value={this.state.inputs.foodTruck.platos}
+                        onValueChange={() => this._CheckboxInput("foodTruck","platos") }
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Platos</Text>
                     </View>
                     <View style={{width: 150, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1260,10 +1646,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('mesaBocaditos', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
-                    status={checkboxes.mesaBocaditos ? 'checked' : 'unchecked'}
-                    onPress={() => this._Checkbox('mesaBocaditos')}
-                  /> 
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={checkboxes.mesaBocaditos ? 'checked' : 'unchecked'}
+                      onPress={() => this._Checkbox('mesaBocaditos')}
+                    /> :
+                      <Switch
+                        value={checkboxes.mesaBocaditos}
+                        onValueChange={() => this._Checkbox('mesaBocaditos') }
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Mesa de Bocaditos</Text>
                 </View>
                 <View style={checkboxes.mesaBocaditos==true?styles.visible:styles.novisible}>
@@ -1274,10 +1668,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 225, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.mesaBocaditos.embutidos ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("mesaBocaditos","embutidos")}
-                      /><Text style={{marginRight: 20}}>Embutidos</Text>
+                      /> :
+                      <Switch
+                        value={this.state.inputs.mesaBocaditos.embutidos}
+                        onValueChange={() => this._CheckboxInput("mesaBocaditos","embutidos")}
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Embutidos</Text>
                     </View>
                     <View style={{width: 75, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1292,10 +1694,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 225, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.mesaBocaditos.dulces ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("mesaBocaditos","dulces")}
-                      /><Text style={{marginRight: 20}}>Dulces</Text>
+                      /> :
+                      <Switch
+                        value={this.state.inputs.mesaBocaditos.dulces}
+                        onValueChange={() => this._CheckboxInput("mesaBocaditos","dulces")}
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Dulces</Text>
                     </View>
                     <View style={{width: 75, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1310,10 +1720,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 225, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.mesaBocaditos.sushi ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("mesaBocaditos","sushi")}
-                      /><Text style={{marginRight: 20}}>Sushi</Text>
+                      /> :
+                      <Switch
+                        value={this.state.inputs.mesaBocaditos.sushi}
+                        onValueChange={() => this._CheckboxInput("mesaBocaditos","sushi")}
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Sushi</Text>
                     </View>
                     <View style={{width: 75, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1328,10 +1746,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 225, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.mesaBocaditos.otros ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("mesaBocaditos","otros")}
-                      /><Text style={{marginRight: 20}}>Otros</Text>
+                      />:
+                      <Switch
+                        value={this.state.inputs.mesaBocaditos.otros}
+                        onValueChange={() => this._CheckboxInput("mesaBocaditos","otros") }
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Otros</Text>
                     </View>
                     <View style={{width: 75, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1362,10 +1788,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('ambientacion', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.ambientacion ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('ambientacion')}
-                  /> 
+                  />  :
+                      <Switch
+                        value={checkboxes.ambientacion}
+                        onValueChange={() => this._Checkbox('ambientacion')}
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Ambientación</Text>
                 </View>
                 <View style={checkboxes.ambientacion==true?styles.visible:styles.novisible}>
@@ -1399,10 +1833,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('mobiliario', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.mobiliario ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('mobiliario')}
-                  /> 
+                  />  :
+                      <Switch
+                        value={checkboxes.mobiliario}
+                        onValueChange={() => this._Checkbox('mobiliario')}
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Mobiliario</Text>
                 </View>
                 <View style={checkboxes.mobiliario==true?styles.visible:styles.novisible}>
@@ -1413,10 +1855,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 225, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.mobiliario.mesas ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("mobiliario","mesas")}
-                      /><Text style={{marginRight: 20}}>Mesas</Text>
+                      /> :
+                      <Switch
+                        value={this.state.inputs.mobiliario.mesas}
+                        onValueChange={() => this._CheckboxInput("mobiliario","mesas") }
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Mesas</Text>
                     </View>
                     <View style={{width: 75, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1431,10 +1881,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 225, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.mobiliario.sillas ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("mobiliario","sillas")}
-                      /><Text style={{marginRight: 20}}>Sillas</Text>
+                      />:
+                      <Switch
+                        value={this.state.inputs.mobiliario.sillas}
+                        onValueChange={() => this._CheckboxInput("mobiliario","sillas")}
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Sillas</Text>
                     </View>
                     <View style={{width: 75, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1449,10 +1907,18 @@ export default class FormularioFiestaScreen extends React.Component  {
                   </View>
                   <View style={estilo.row}>
                     <View style={{width: 225, flexDirection:'row', alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.mobiliario.juegosLounge ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("mobiliario","juegosLounge")}
-                      /><Text style={{marginRight: 20}}>Juegos de Lounge</Text>
+                      />:
+                      <Switch
+                        value={this.state.inputs.mobiliario.juegosLounge}
+                        onValueChange={() => this._CheckboxInput("mobiliario","juegosLounge")}
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Juegos de Lounge</Text>
                     </View>
                     <View style={{width: 75, flexDirection:'row', alignSelf:'flex-end', justifyContent:'space-between'}}>
                       <View style={{flex:1, padding:3}}>
@@ -1474,10 +1940,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('invitaciones', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.invitaciones ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('invitaciones')}
-                  /> 
+                  /> :
+                      <Switch
+                        value={checkboxes.invitaciones }
+                        onValueChange={() => this._Checkbox('invitaciones') }
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Invitaciones</Text>
                 </View>
                 <View style={checkboxes.invitaciones==true?styles.visible:styles.novisible}>
@@ -1555,10 +2029,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('genero', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
-                    status={checkboxes.genero ? 'checked' : 'unchecked'}
-                    onPress={() => this._Checkbox('genero')}
-                  /> 
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={checkboxes.genero ? 'checked' : 'unchecked'}
+                      onPress={() => this._Checkbox('genero')}
+                    />  :
+                      <Switch
+                        value={checkboxes.genero}
+                        onValueChange={() => this._Checkbox('genero') }
+                      />
+                    }
+                 
                   <Text style={{fontSize: 20}}>Genero</Text>
                 </View>
                 <View style={checkboxes.genero==true?styles.visible:styles.novisible}>
@@ -1598,10 +2080,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('djParty', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.djParty ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('djParty')}
-                  /> 
+                  /> :
+                      <Switch
+                        value={checkboxes.djParty }
+                        onValueChange={() => this._Checkbox('djParty')}
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Música y Luces</Text>
                 </View>
                 <View style={checkboxes.djParty==true?styles.visible:styles.novisible}>
@@ -1616,34 +2106,79 @@ export default class FormularioFiestaScreen extends React.Component  {
                       <Text style={{marginLeft: 20}}>horas</Text>
                   </View>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.djParty.sonido ? 'checked' : 'unchecked'}
                       color="#c63275"
                       onPress={() => this._CheckboxInput("djParty","sonido")}
-                    /><Text style={{marginRight: 20}}>Equipo de Sonido</Text>
-                    <Checkbox
+                    /> :
+                      <Switch
+                        value={this.state.inputs.djParty.sonido}
+                        color="#c63275"
+                        onValueChange={() => this._CheckboxInput("djParty","sonido") }
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Equipo de Sonido</Text>
+                    {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.djParty.microfono ? 'checked' : 'unchecked'}
                       color="#c63275"
                       onPress={() => this._CheckboxInput("djParty","microfono")}
-                    /><Text style={{marginRight: 20}}>Micrófonos</Text>
+                    />:
+                      <Switch
+                        value={this.state.inputs.djParty.microfono}
+                        color="#c63275"
+                        onValueChange={() => this._CheckboxInput("djParty","microfono") }
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Micrófonos</Text>
                     
                   </View>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.djParty.luces ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("djParty","luces")}
                       color="#c63275"
-                    /><Text style={{marginRight: 20}}>Luces</Text>
-                    <Checkbox
+                    />:
+                      <Switch
+                        value={this.state.inputs.djParty.luces}
+                        onValueChange={() => this._CheckboxInput("djParty","luces") }
+                        color="#c63275"
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Luces</Text>
+                    {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.djParty.dj ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("djParty","dj")}
                       color="#c63275"
-                    /><Text style={{marginRight: 20}}>DJ</Text>
-                    <Checkbox
+                    /> :
+                      <Switch
+                        value={this.state.inputs.djParty.dj}
+                        onValueChange={() => this._CheckboxInput("djParty","dj")}
+                        color="#c63275"
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>DJ</Text>
+                    {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.djParty.orquesta ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("djParty","orquesta")}
                       color="#c63275"
-                    /><Text style={{marginRight: 20}}>Orquesta</Text>
+                    /> :
+                      <Switch
+                        value={this.state.inputs.djParty.orquesta }
+                        onValueChange={() => this._CheckboxInput("djParty","orquesta") }
+                        color="#c63275"
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Orquesta</Text>
                   </View>
                   <View style={estilo.row}>
                     <TextInput
@@ -1674,10 +2209,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('maestroCeremonias', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
-                    status={checkboxes.maestroCeremonias ? 'checked' : 'unchecked'}
-                    onPress={() => this._Checkbox('maestroCeremonias')}
-                  /> 
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={checkboxes.maestroCeremonias ? 'checked' : 'unchecked'}
+                      onPress={() => this._Checkbox('maestroCeremonias')}
+                    /> :
+                      <Switch
+                        value={checkboxes.maestroCeremonias}
+                        onValueChange={() => this._Checkbox('maestroCeremonias')}
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Maestro de Ceremonias</Text>
                   <View style={{position:'relative', width: 30, height: 60, top:0, right:0}}>
                       <TouchableOpacity 
@@ -1735,10 +2278,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('sorpresas', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.sorpresas ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('sorpresas')}
-                  /> 
+                  /> :
+                      <Switch
+                        value={checkboxes.sorpresas}
+                        onValueChange={() => this._Checkbox('sorpresas')}
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Sorpresas</Text>
                 </View>
                 <View style={checkboxes.sorpresas==true?styles.visible:styles.novisible}>
@@ -1783,10 +2334,19 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('miniSpa', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+
+                      <Checkbox
                     status={checkboxes.miniSpa ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('miniSpa')}
-                  /> 
+                  /> :
+                      <Switch
+                        value={checkboxes.miniSpa }
+                        onValueChange={() =>this._Checkbox('miniSpa')}
+                      />
+                    }
+                   
                   <Text style={{fontSize: 20}}>Mini Spa</Text>
                 </View>
                 
@@ -1794,13 +2354,32 @@ export default class FormularioFiestaScreen extends React.Component  {
                   <View style={[estilo.row, {alignItems: 'flex-start'}]}>
                     <View style={{width:'50%'}}>
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           status={this.state.inputs.miniSpa.manicure ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("miniSpa","manicure")}
                           color="#c63275"
-                        /><Text style={{marginRight: 20}}>Manicure</Text> 
+                        /> :
+                      <Switch
+                        value={this.state.inputs.miniSpa.manicure}
+                        onValueChange={() => this._CheckboxInput("miniSpa","manicure") }
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Manicure</Text> 
                       </View>
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                        status={checkboxes.animacion ? 'checked' : 'unchecked'}
+                        onPress={() => this._Checkbox('animacion')}
+                      /> :
+                      <Switch
+                        value={checkboxes.animacion}
+                        onValueChange={() => this._Checkbox('animacion') }
+                      />
+                    }
                         <Checkbox
                           status={this.state.inputs.miniSpa.pedicure ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("miniSpa","pedicure")}
@@ -1808,25 +2387,52 @@ export default class FormularioFiestaScreen extends React.Component  {
                         /><Text style={{marginRight: 20}}>Pedicure</Text> 
                       </View>
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Checkbox
-                          status={this.state.inputs.miniSpa.peinado ? 'checked' : 'unchecked'}
-                          onPress={() => this._CheckboxInput("miniSpa","peinado")}
-                          color="#c63275"
-                        /><Text style={{marginRight: 20}}>Peinado</Text> 
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={this.state.inputs.miniSpa.peinado ? 'checked' : 'unchecked'}
+                      onPress={() => this._CheckboxInput("miniSpa","peinado")}
+                      color="#c63275"
+                    />:
+                      <Switch
+                        value={this.state.inputs.miniSpa.peinado}
+                        onValueChange={() => this._CheckboxInput("miniSpa","peinado")}
+                        color="#c63275"
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Peinado</Text> 
                       </View>
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           status={this.state.inputs.miniSpa.caritasPintadas ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("miniSpa","caritasPintadas")}
                           color="#c63275"
-                        /><Text style={{marginRight: 20}}>Caritas Pintadas</Text> 
+                        /> :
+                      <Switch
+                        value={this.state.inputs.miniSpa.caritasPintadas}
+                        onValueChange={() => this._CheckboxInput("miniSpa","caritasPintadas") }
+                        color="#c63275"
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Caritas Pintadas</Text> 
                       </View>
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           status={this.state.inputs.miniSpa.masajes ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("miniSpa","masajes")}
                           color="#c63275"
-                        /><Text style={{marginRight: 20}}>Masajes</Text> 
+                        />:
+                      <Switch
+                        value={this.state.inputs.miniSpa.masajes }
+                        onValueChange={() => this._CheckboxInput("miniSpa","masajes") }
+                        color="#c63275"
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Masajes</Text> 
                       </View>
                     </View>
                     <View style={{width:'50%'}}>
@@ -1873,10 +2479,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('planner', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
-                    status={checkboxes.planner ? 'checked' : 'unchecked'}
-                    onPress={() => this._Checkbox('planner')}
-                  /> 
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={checkboxes.planner ? 'checked' : 'unchecked'}
+                      onPress={() => this._Checkbox('planner')}
+                    /> :
+                      <Switch
+                        value={checkboxes.planner}
+                        onValueChange={() => this._Checkbox('planner') }
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Planner</Text>
                 </View>
                 
@@ -1966,28 +2580,54 @@ export default class FormularioFiestaScreen extends React.Component  {
            
               <View style={this._itemsCheck('transporte', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.transporte ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('transporte')}
-                  /> 
+                  />  :
+                      <Switch
+                        value={checkboxes.transporte}
+                        onValueChange={() => this._Checkbox('transporte')}}
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Transporte</Text>
                 </View>
                 
                 <View style={checkboxes.transporte==true?styles.visible:styles.novisible}>
                   <View style={estilo.row}>
                     <View style={{flexDirection: 'row', width:150, alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.transporte.clasico ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("transporte","clasico")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Clásico</Text> 
+                      /> :
+                      <Switch
+                        value={this.state.inputs.transporte.clasico}
+                        onValueChange={() => this._CheckboxInput("transporte","clasico")}
+                        color="#c63275"
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Clásico</Text> 
                     </View>
                     <View style={{flexDirection: 'row', width:150, alignItems: 'center'}}>
+                    {
+                      Platform.OS === 'android' ? 
                       <Checkbox
                         status={this.state.inputs.transporte.especial ? 'checked' : 'unchecked'}
                         onPress={() => this._CheckboxInput("transporte","especial")}
                         color="#c63275"
-                      /><Text style={{marginRight: 20}}>Especial</Text> 
+                      /> :
+                      <Switch
+                        value={this.state.inputs.transporte.especial }
+                        onValueChange={() => this._CheckboxInput("transporte","especial")}
+                        color="#c63275"
+                      />
+                    }
+                      <Text style={{marginRight: 20}}>Especial</Text> 
                     </View>
                     
                   </View>
@@ -2019,10 +2659,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('servicioCadetes', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.servicioCadetes ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('servicioCadetes')}
-                  /> 
+                  />  :
+                      <Switch
+                        value={checkboxes.servicioCadetes}
+                        onValueChange={() => this._Checkbox('servicioCadetes') }
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Servicio de cadetes</Text>
                 </View>
                 
@@ -2048,10 +2696,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('chambeLan', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.chambeLan ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('chambeLan')}
-                  /> 
+                  />  :
+                      <Switch
+                        value={checkboxes.chambeLan }
+                        onValueChange={() => this._Checkbox('chambeLan') }
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Chambe Lan</Text>
                 </View>
                 
@@ -2085,10 +2741,17 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('torta', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.torta ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('torta')}
-                  /> 
+                  /> :
+                      <Switch
+                        value={checkboxes.torta }
+                        onValueChange={() => this._Checkbox('torta')}
+                      />
+                    }
                   <Text style={{fontSize: 20}}>Torta</Text>
                 </View>
                 
@@ -2140,10 +2803,18 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('servicioParrillero', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.servicioParrillero ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('servicioParrillero')}
-                  /> 
+                  /> :
+                      <Switch
+                        value={checkboxes.servicioParrillero }
+                        onValueChange={() => this._Checkbox('servicioParrillero') }
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Servicio Parrillero</Text>
                   <View style={{position:'relative', width: 30, height: 60, top:0, right:0}}>
                       <TouchableOpacity 
@@ -2161,28 +2832,64 @@ export default class FormularioFiestaScreen extends React.Component  {
                 
                 <View style={checkboxes.servicioParrillero==true?styles.visible:styles.novisible}>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.servicioParrillero.parrilla ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("servicioParrillero","parrilla")}
                       color="#c63275"
-                    /><Text style={{marginRight: 20}}>Parrilla</Text> 
-                    <Checkbox
+                    /> :
+                      <Switch
+                        value={this.state.inputs.servicioParrillero.parrilla}
+                        onValueChange={() => this._CheckboxInput("servicioParrillero","parrilla")}
+                        color="#c63275"
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Parrilla</Text> 
+                    {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.servicioParrillero.encargado ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("servicioParrillero","encargado")}
                       color="#c63275"
-                    /><Text style={{marginRight: 20}}>Encargado de parrilla</Text> 
+                    /> :
+                      <Switch
+                        value={this.state.inputs.servicioParrillero.encargado }
+                        onValueChange={() => this._CheckboxInput("servicioParrillero","encargado")}
+                        color="#c63275"
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Encargado de parrilla</Text> 
                   </View> 
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.servicioParrillero.mozos ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("servicioParrillero","mozos")}
                       color="#c63275"
-                    /><Text style={{marginRight: 20}}>Mozos / Azafatas</Text> 
-                    <Checkbox
+                    />:
+                      <Switch
+                        value={this.state.inputs.servicioParrillero.mozos}
+                        onValueChange={() => this._CheckboxInput("servicioParrillero","mozos")}
+                        color="#c63275"
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Mozos / Azafatas</Text> 
+                    {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.servicioParrillero.menaje ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("servicioParrillero","menaje")}
                       color="#c63275"
-                    /><Text style={{marginRight: 20}}>Menaje</Text> 
+                    />:
+                      <Switch
+                        value={this.state.inputs.servicioParrillero.menaje}
+                        onValueChange={() => this._CheckboxInput("servicioParrillero","menaje")}
+                        color="#c63275"
+                      />
+                    }
+                   <Text style={{marginRight: 20}}>Menaje</Text> 
                   </View>
                   <View style={estilo.row}>
                     <TextInput
@@ -2212,25 +2919,51 @@ export default class FormularioFiestaScreen extends React.Component  {
 
               <View style={this._itemsCheck('carnes', this.state.step)?styles.visible:styles.novisible}>
                 <View style={estilo.row2}>
-                  <Checkbox
+                {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                     status={checkboxes.carnes ? 'checked' : 'unchecked'}
                     onPress={() => this._Checkbox('carnes')}
-                  /> 
+                  />  :
+                      <Switch
+                        value={checkboxes.carnes}
+                        onValueChange={() => this._Checkbox('carnes') }
+                      />
+                    }
+                  
                   <Text style={{fontSize: 20}}>Carnes</Text>
                 </View>
                 
                 <View style={checkboxes.carnes==true?styles.visible:styles.novisible}>
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.carnes.ensalada ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("carnes","ensalada")}
                       color="#c63275"
-                    /><Text style={{marginRight: 20}}>Ensalada</Text> 
-                    <Checkbox
+                    /> :
+                      <Switch
+                        value={this.state.inputs.carnes.ensalada }
+                        onValueChange={() =>this._CheckboxInput("carnes","ensalada")}
+                        color="#c63275"
+                      />
+                    }
+                    <Text style={{marginRight: 20}}>Ensalada</Text> 
+                    {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.carnes.entradas ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("carnes","entradas")}
                       color="#c63275"
-                    /><Text>Entradas</Text> 
+                    /> :
+                      <Switch
+                        value={this.state.inputs.carnes.entradas}
+                        onValueChange={() => this._CheckboxInput("carnes","entradas")}
+                        color="#c63275"
+                      />
+                    }
+                    <Text>Entradas</Text> 
                     <View style={{position:'relative', width: 30, height: 60}}>
                       <TouchableOpacity 
                         style={styles.errorForm}
@@ -2245,11 +2978,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                     </View>
                   </View> 
                   <View style={estilo.row}>
-                    <Checkbox
+                  {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                       status={this.state.inputs.carnes.carnes ? 'checked' : 'unchecked'}
                       onPress={() => this._CheckboxInput("carnes","carnes")}
                       color="#c63275"
-                    /><Text>Carnes</Text> 
+                    /> :
+                      <Switch
+                        value={this.state.inputs.carnes.carnes}
+                        onValueChange={() => this._CheckboxInput("carnes","carnes")}
+                        color="#c63275"
+                      />
+                    }
+                    <Text>Carnes</Text> 
                     <View style={{position:'relative', width: 30, height: 60}}>
                       <TouchableOpacity 
                         style={styles.errorForm}
@@ -2266,11 +3008,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                   <View style={this.state.inputs.carnes.carnes?styles.visible:styles.novisible}>
                     <View style={{width:300,flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
                       <View style={{width:'60%', flexDirection: 'row', alignItems:'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           status={this.state.inputs.carnes.asadoDeTira ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("carnes","asadoDeTira")}
                           color="#c63275"
-                        /><Text style={{marginRight: 20}}>Asado de tira</Text>
+                        /> :
+                      <Switch
+                        value={this.state.inputs.carnes.asadoDeTira}
+                        onValueChange={() => this._CheckboxInput("carnes","asadoDeTira")}
+                        color="#c63275"
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Asado de tira</Text>
                       </View>
                       <View style={{width:'40%', flexDirection: 'row'}}>
                         <Dropdown
@@ -2297,11 +3048,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                     </View>
                     <View style={{width:300,flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
                       <View style={{width:'60%', flexDirection: 'row', alignItems:'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           status={this.state.inputs.carnes.bifeDeLomo ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("carnes","bifeDeLomo")}
                           color="#c63275"
-                        /><Text style={{marginRight: 20}}>Bife de lomo</Text>
+                        /> :
+                      <Switch
+                        value={this.state.inputs.carnes.bifeDeLomo}
+                        onValueChange={() => this._CheckboxInput("carnes","bifeDeLomo")}
+                        color="#c63275"
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Bife de lomo</Text>
                       </View>
                       <View style={{width:'40%', flexDirection: 'row'}}>
                         <Dropdown
@@ -2328,11 +3088,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                     </View>
                     <View style={{width:300,flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
                       <View style={{width:'60%', flexDirection: 'row', alignItems:'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           status={this.state.inputs.carnes.bifeAngosto ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("carnes","bifeAngosto")}
                           color="#c63275"
-                        /><Text style={{marginRight: 20}}>Bife Angosto</Text>
+                        /> :
+                      <Switch
+                        value={this.state.inputs.carnes.bifeAngosto}
+                        onValueChange={() => this._CheckboxInput("carnes","bifeAngosto") }
+                        color="#c63275"
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Bife Angosto</Text>
                       </View>
                       <View style={{width:'40%', flexDirection: 'row'}}>
                         <Dropdown
@@ -2359,11 +3128,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                     </View>
                     <View style={{width:300,flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
                       <View style={{width:'60%', flexDirection: 'row', alignItems:'center'}}>
-                        <Checkbox
-                          status={this.state.inputs.carnes.bifeAncho ? 'checked' : 'unchecked'}
-                          onPress={() => this._CheckboxInput("carnes","bifeAncho")}
-                          color="#c63275"
-                        /><Text style={{marginRight: 20}}>Bife Ancho</Text>
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
+                      status={this.state.inputs.carnes.bifeAncho ? 'checked' : 'unchecked'}
+                      onPress={() => this._CheckboxInput("carnes","bifeAncho")}
+                      color="#c63275"
+                    />:
+                      <Switch
+                        value={this.state.inputs.carnes.bifeAncho }
+                        onValueChange={() => this._CheckboxInput("carnes","bifeAncho") }
+                        color="#c63275"
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Bife Ancho</Text>
                       </View>
                       <View style={{width:'40%', flexDirection: 'row'}}>
                         <Dropdown
@@ -2390,11 +3168,19 @@ export default class FormularioFiestaScreen extends React.Component  {
                     </View>
                     <View style={{width:300,flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
                       <View style={{width:'60%', flexDirection: 'row', alignItems:'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           status={this.state.inputs.carnes.chuleta ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("carnes","chuleta")}
                           color="#c63275"
-                        /><Text style={{marginRight: 20}}>Chuleta</Text>
+                        /> :
+                      <Switch
+                        value={this.state.inputs.carnes.chuleta }
+                        onValueChange={() => this._CheckboxInput("carnes","chuleta") }
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Chuleta</Text>
                       </View>
                       <View style={{width:'40%', flexDirection: 'row'}}>
                         <Dropdown
@@ -2421,11 +3207,20 @@ export default class FormularioFiestaScreen extends React.Component  {
                     </View>
                     <View style={{width:300,flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
                       <View style={{width:'60%', flexDirection: 'row', alignItems:'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           status={this.state.inputs.carnes.churrasco ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("carnes","churrasco")}
                           color="#c63275"
-                        /><Text style={{marginRight: 20}}>Churrasco</Text>
+                        />:
+                      <Switch
+                        value={this.state.inputs.carnes.churrasco}
+                        onValueChange={() => this._CheckboxInput("carnes","churrasco")}
+                        color="#c63275"
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Churrasco</Text>
                       </View>
                       <View style={{width:'40%', flexDirection: 'row'}}>
                       <Dropdown
@@ -2452,11 +3247,19 @@ export default class FormularioFiestaScreen extends React.Component  {
                     </View>
                     <View style={{width:300,flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
                       <View style={{width:'60%', flexDirection: 'row', alignItems:'center'}}>
-                        <Checkbox
+                      {
+                      Platform.OS === 'android' ? 
+                      <Checkbox
                           status={this.state.inputs.carnes.cuadril ? 'checked' : 'unchecked'}
                           onPress={() => this._CheckboxInput("carnes","cuadril")}
                           color="#c63275"
-                        /><Text style={{marginRight: 20}}>Cuadril</Text>
+                        /> :
+                      <Switch
+                        value={checkboxes.animacion}
+                        onValueChange={() => this._Checkbox('animacion') }
+                      />
+                    }
+                        <Text style={{marginRight: 20}}>Cuadril</Text>
                       </View>
                       <View style={{width:'40%', flexDirection: 'row'}}>
                         <Dropdown
