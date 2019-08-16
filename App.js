@@ -1,6 +1,10 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, ScrollView, Text, Image} from 'react-native';
-import { AppLoading, Asset, Font, Icon, Constants } from 'expo';
+import { AppLoading } from 'expo';
+import { Asset } from 'expo-asset'
+import Constants from 'expo-constants'
+import * as Font from 'expo-font'
+import * as Icon from '@expo/vector-icons'
 import LoginNavigator from './navigation/LoginNavigator';
 import MenuPrincipal from './navigation/menuPrincipal';
 import Loading from './components/Loading';

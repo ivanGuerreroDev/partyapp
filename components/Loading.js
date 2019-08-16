@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image} from 'react-native';
-import { Asset, Font, Icon, Constants } from 'expo';
-
+import { Asset } from 'expo-asset'
+import Constants from 'expo-constants'
+import * as Font from 'expo-font'
+import * as Icon from '@expo/vector-icons'
 
 export default class Loading extends React.Component {
   constructor(props){
