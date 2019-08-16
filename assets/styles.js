@@ -94,9 +94,13 @@ export default StyleSheet.create({
     fontWeight: '700',
     paddingHorizontal: 10,
     paddingVertical: 20,
+
+  } ,
+
+  userNameWrapper:{
     borderBottomWidth: 1,
     borderBottomColor: '#c63275'
-  } ,
+  },
 
   botonGradient:{
     paddingHorizontal: 15,

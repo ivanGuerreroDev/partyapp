@@ -88,10 +88,11 @@ export default createAppContainer(createDrawerNavigator (
   },
   contentComponent: props => 
   <ScrollView style={styles.menuPrincipal}>
-    <Text style={styles.menuPrincipalUserName}>
-      {
-        props.screenProps.getState().datosUsuario.nombreCompleto
-      }</Text>
+    <View style={styles.userNameWrapper}>
+      <Text style={styles.menuPrincipalUserName}>
+        { props.screenProps.getState().datosUsuario.nombreCompleto}
+      </Text>
+    </View>
     <DrawerItems {...props} /> 
     <TouchableOpacity
       onPress={()=>{props.screenProps._logout()}}
