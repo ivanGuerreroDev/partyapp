@@ -4,7 +4,8 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  Platform
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import IconAntDesign from '@expo/vector-icons/AntDesign';
@@ -108,7 +109,8 @@ export default class FormularioSteps extends React.Component  {
                   position: 'absolute',
                   left: 0,right: 0,top: 0,
                   width: 50, height: 50,
-                  borderRadius: 30,
+                  overflow:'hidden',
+                  borderRadius: Platform.OS === 'android' ? 30 : 25 ,
                 }}
                 start={[1, 0]}
                 end={[1, 1]}
@@ -143,7 +145,8 @@ const estilo = StyleSheet.create({
   },
   stepCirculoActivo: {
     fontSize: 24,
-    borderRadius: 30,
+    borderRadius: Platform.OS === 'android' ? 30 : 25 ,
+    overflow:'hidden',
     color: '#fff', backgroundColor: '#c63275',
     justifyContent: 'center', alignItems: 'center',
     textAlign: 'center',
@@ -151,7 +154,8 @@ const estilo = StyleSheet.create({
   },
   stepCirculo: {
     fontSize: 24,
-    borderRadius: 30,
+    borderRadius: Platform.OS === 'android' ? 30 : 25 ,
+    overflow:'hidden',
     color: '#333', backgroundColor: '#d3dddd',
     justifyContent: 'center', alignItems: 'center',
     textAlign: 'center',
