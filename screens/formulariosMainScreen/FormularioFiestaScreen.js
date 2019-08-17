@@ -215,7 +215,7 @@ export default class FormularioFiestaScreen extends React.Component  {
                       onPress={() => this._CheckboxInput("horaLoca","cotillon")}
                     /> :
                       <Switch
-                        value={cthis.state.inputs.horaLoca.cotillon}
+                        value={this.state.inputs.horaLoca.cotillon}
                         onValueChange={() => this._CheckboxInput("horaLoca","cotillon") }
                       />
                     }
@@ -647,7 +647,7 @@ export default class FormularioFiestaScreen extends React.Component  {
                       onPress={() => this._Checkbox('recuerdos')}
                     /> :
                       <Switch
-                        value={heckboxes.recuerdos}
+                        value={checkboxes.recuerdos}
                         onValueChange={() => this._Checkbox('recuerdos') }
                       />
                     }
@@ -2588,7 +2588,7 @@ export default class FormularioFiestaScreen extends React.Component  {
                   />  :
                       <Switch
                         value={checkboxes.transporte}
-                        onValueChange={() => this._Checkbox('transporte')}}
+                        onValueChange={() => this._Checkbox('transporte')}
                       />
                     }
                   
