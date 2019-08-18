@@ -240,5 +240,23 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+
+  // 
+  questionTitle:{
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'left',
+    color:'#C63275',
+
+  },
+  questionDescription:{
+    fontSize:12,
+    fontWeight: '300',
+    textAlign: 'left',
+    color:'black',
+    lineHeight:20,
+    textAlign:'justify',
+    marginBottom:20
   }
 });
