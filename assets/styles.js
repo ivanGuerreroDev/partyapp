@@ -258,5 +258,66 @@ export default StyleSheet.create({
     lineHeight:20,
     textAlign:'justify',
     marginBottom:20
-  }
+  },
+
+  //intro styles
+  intro:{
+    flex: 1,
+    flexDirection: 'row',
+  },
+  introTitle:{
+    fontSize: 22,
+    color: '#fff',
+    backgroundColor: 'transparent',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  introText:{
+    color: '#fff',
+    backgroundColor: 'transparent',
+    textAlign: 'center',
+    padding: 16,
+
+  },
+  introContainer:{
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  paginationContainer: {
+    position: 'absolute',
+    bottom: 16 ,
+    left: 16,
+    right: 16,
+  },
+  paginationDots: {
+    height: 16,
+    margin: 16,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 4,
+  },
+  activeDotStyle: {
+    backgroundColor: 'rgba(255, 255, 255, .9)',
+  },
+  dotStyle: {
+    backgroundColor: 'rgba(0, 0, 0, .2)',
+  },
+  introButtonText:{
+    backgroundColor: 'transparent',
+    color: 'white',
+    fontSize: 12,
+    padding: 12,
+
+  },
+  rightButtonContainer: {
+    position: 'absolute',
+    right: 0,
+  },
 });
