@@ -12,6 +12,7 @@ import CambiarContrasenaScreen from '../screens/CambiarContrasenaScreen';
 import PreguntasFrecuentesScreen from '../screens/PreguntasFrecuentesScreen';
 import TerminosCondicionesScreen from '../screens/TerminosCondicionesScreen';
 import SoporteScreen from '../screens/SoporteScreen';
+import QuienesSomosScreen from '../screens/QuienesSomosScreen'
 
 import styles from '../assets/styles';
 
@@ -77,6 +78,12 @@ export default createAppContainer(createDrawerNavigator (
       screen:SoporteScreen,
       navigationOptions: {
         title: 'Soporte',
+      }
+    },
+    QuienesSomos:{
+      screen:QuienesSomosScreen,
+      navigationOptions:{
+        title: 'Quienes Somos',
       }
     }
 }, {
