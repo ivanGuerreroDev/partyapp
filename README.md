@@ -2,8 +2,10 @@
 
 Documentación del webservices para partyapp
 
-##Usuario
-###Schema de usuarios
+## Usuario
+
+### Schema de usuarios
+
 username: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
   email: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
   privilege: {type: String, default: 'Usuario', enum: ['Usuario', 'Admin', 'Proveedor'] },
@@ -27,7 +29,7 @@ username: {type: String, lowercase: true, unique: true, required: [true, "can't 
   popupCheckForm: {type: Boolean, default:true},
   popupInputMesagge: {type: Boolean, default:true}
   
- ###Rutas
+ ### Rutas
  
 POST: __host__/users/login
 {username:"nombre de usuario",password:"password"}
