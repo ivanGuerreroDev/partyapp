@@ -10,9 +10,8 @@ import {
     ScrollView,
     Platform
 } from 'react-native';
-import {AuthSession} from 'expo';
 import { LinearGradient } from 'expo-linear-gradient'
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Authentication from '../modules/authentication'
 
 export default class Register extends Component {
     constructor(props) {
@@ -45,34 +44,21 @@ export default class Register extends Component {
         this.props.screenProps.isLoggedIn(); 
     }
     Singup = async () => {
-        let data = {
-            method: 'POST',
-            body: JSON.stringify({
-                'username': this.state.username,
-                'email': this.state.email,
-                'password': this.handlePasswordRepeat(),
-                'nombreCompleto': this.state.nombreCompleto,
-                'direccion': this.state.direccion,
-                'distrito': this.state.distrito,
-                'telefono': this.state.telefono,
-            }),
-            headers: {
-              'Accept':       'application/json',
-              'Content-Type': 'application/json'
-            }
-        } 
-        fetch('https://192.168.1.22/api/users', data) 
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if(responseJson){
-                    this.props.screenProps.setState({datosUsuario: responseJson.user});
-                    this.logInUser();
+        this.setState({ email:this.state.email.toLowerCase(),loading:true });
+        this.props.screenProps.cargando();
+        const { username, email , password , nombreCompleto , direccion , distrito, telefono} = this.state;
+    
+        Authentication.register({username,email,password,nombreCompleto,direccion,distrito,telefono})
+            .then((result) => {
+                console.log(result)
+                this.props.screenProps.cargado();
+                if(result){
+                    alert("Registrado con exito")
+                    this.props.navigation.navigate("Login")
+                }else{
+                    alert("Usuario ya existe")
                 }
-              })
-              .catch((error) => {
-                console.error(error);
-              }
-        );
+        })
     }
     render() {     
         return (

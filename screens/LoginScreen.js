@@ -12,6 +12,7 @@ import {
 import {AuthSession} from 'expo';
 import { LinearGradient } from 'expo-linear-gradient'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Authentication from '../modules/authentication'
 
 export default class Login extends Component {
     
@@ -86,36 +87,19 @@ export default class Login extends Component {
     }
     Login = async () => {
         this.props.screenProps.cargando();
-        fetch('https://gopartyperu.herokuapp.com/api/users/login', 
-        //fetch('http://192.168.1.22:3000/api/users/login', 
-        {
-            method: 'POST',
-            headers: {
-                'Accept':       'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'username': this.props.screenProps.getState().username,
-                'password': this.props.screenProps.getState().password
-            })
+        const { username , password } = this.props.screenProps.getState();
+        Authentication.login({username,password})
+            .then((result) => {
+                this.props.screenProps.cargado();
+                if(result){
+                    this.props.screenProps.setState({datosUsuario: result.user})
+                    this.props.screenProps.isLoggedIn();
+                }else{
+                    alert("Usuario o Contraseña Incorrecta")
+                    //if(responseJson.info) this.props.screenProps.setState({errorAuth: responseJson.info.message})
+                    //else if(responseJson.error) this.props.screenProps.setState({errorAuth: responseJson.error.message})
+                }
         })
-        .then((response) => {
-            return response.json()
-        })
-        .then((responseJson) => {
-            this.props.screenProps.cargado();
-            if(responseJson.success){
-                this.props.screenProps.setState({datosUsuario: responseJson.user})
-                this.props.screenProps.isLoggedIn();
-            }else{
-                if(responseJson.info) this.props.screenProps.setState({errorAuth: responseJson.info.message})
-                else if(responseJson.error) this.props.screenProps.setState({errorAuth: responseJson.error.message})
-            }
-           
-        })
-        .catch((error) => {
-            console.error(error)
-        });
     }
     render() {
         return (
