@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, ScrollView, Text, Image} from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage, Text, Image} from 'react-native';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset'
 import Constants from 'expo-constants'
@@ -19,9 +19,24 @@ export default class App extends React.Component {
       isLoggedIn: false,
       username: '',
       password: '',
-    };   
+      datosUsuario : null
+    }; 
+    this._bootstrapAsync();  
   }
+
+
+    // Fetch the token from storage then navigate to our appropriate place
+    _bootstrapAsync = async () => {
+      const userToken = await AsyncStorage.getItem('token');
+      this.setState({
+        isLoggedIn : userToken,
+        datosUsuario : JSON.parse(userToken)
+      })
+    };
+
+    
   render() { 
+
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (   
         <AppLoading 

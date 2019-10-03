@@ -77,7 +77,7 @@ export default class DatosFiestaScreen extends ValidationComponent  {
 
   SiguientePantalla = () => {
     // Call ValidationComponent validate method
-    this.props.navigation.navigate('TipoFiesta');
+    //this.props.navigation.navigate('TipoFiesta');
     var args = {
       inputNombreEvento: {minlength:3, maxlength:15, required: true},
       inputFechaEvento: {date: 'YYYY-MM-DD', required: true},
@@ -131,7 +131,7 @@ export default class DatosFiestaScreen extends ValidationComponent  {
     })
     var locales = this.state.locales.map((local, i) =>{
       return(
-        <View>
+        <View key={i}>
           <View style={styles.formContainer}>
               <Dropdown
                 style={{width:100}}
@@ -509,7 +509,7 @@ export default class DatosFiestaScreen extends ValidationComponent  {
             <Modal
                 animationType="slide"
                 transparent={true}
-                visible={this.state.modal}>
+                visible={this.state.errorPopup}>
                   <TouchableWithoutFeedback onPress={()=>this.setState({errorPopup: false})}>
                   <Animatable.View animation={'fadeIn'}
                   style={styles.modalContainer}>

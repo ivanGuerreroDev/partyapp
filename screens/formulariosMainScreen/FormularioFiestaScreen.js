@@ -23,6 +23,7 @@ import styles from '../../assets/styles';
 import IconAntDesign from '@expo/vector-icons/AntDesign';
 import { Dropdown } from 'react-native-material-dropdown';
 import * as Animatable from 'react-native-animatable';
+import Authentication from '../../modules/authentication'
 
 var categorias = require('../../datos/categoriasFormulario.json');
 
@@ -3304,6 +3305,9 @@ export default class FormularioFiestaScreen extends React.Component  {
             screenProps={{
               changeStep: (e) => this.setState({step: e}),
               currentStep: () => this.state.step,
+              datosFiesta : this.state.datosFiesta.tipoFiesta,
+              servicios : this.state.checkboxes,
+              navigation : this.props.navigation
             }}
           />
 
@@ -3439,43 +3443,22 @@ export default class FormularioFiestaScreen extends React.Component  {
   _hideModal_popupInputMessage = () => this.setState({ popupInputMesagge: false });
   
   _entendido_popupInputMessage = async () => {
-    fetch('http://192.168.1.22:3000/api/users/update', 
-    {
-        method: 'POST',
-        headers: {
-            'Accept':       'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          popupInputMesagge: false,
-          id: this.props.screenProps.getState().datosUsuario.id
-        })
-    })
-    .catch((error) => {
-      console.error(error);
-    });
 
+    const popupInputMesagge = false
+    const id = this.props.screenProps.getState().datosUsuario.id
+    Authentication.update( {popupInputMesagge , id }).then((result) => {
+         console.log(result)
+    })
     this.setState({popupInputMesagge: false});
     this.setState({primerInput: false});
   }
   
   _entendido_popupCheckForm = async () => {
-    fetch('http://192.168.1.22:3000/api/users/update', 
-    {
-        method: 'POST',
-        headers: {
-            'Accept':       'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          id: this.props.screenProps.getState().datosUsuario.id,
-          popupCheckForm: false,
-        })
+    const id = this.props.screenProps.getState().datosUsuario.id
+    const popupCheckForm = false
+    Authentication.update( {popupCheckForm , id }).then((result) => {
+          console.log(result)
     })
-    .catch((error) => {
-      console.error(error);
-    });
-
     this.setState({popupCheckForm: false});
   }
 

@@ -35,8 +35,9 @@ export default {
         body: JSON.stringify(data),
         headers: headers
     }
-    console.log(`${server}/api/users/login`) 
-    return fetch(`${server}/api/users/login`, config) 
-    }
+    console.log(`${server}/api/users/update`) 
+    return fetch(`${server}/api/users/update`, config) 
+    },
+    
   
 }

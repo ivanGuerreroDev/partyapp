@@ -33,15 +33,24 @@ export default {
             authData = await Authentication.login(data)
 			result = await authData.json()
 			console.log(result)
-			const auth = {
-				token: result.user.token,
-				id: result.user.id
-			}
+			const auth = result.user
 			await AsyncStorage.setItem('token', JSON.stringify(auth))
 		} catch (error) {
 			console.log(error)
 			result = false;
 		}
 		return result;
-	}
+	},
+	//update user
+    async update (data) {
+        let authData, result;
+		try {
+            authData = await Authentication.update(data)
+            result = await authData.json()
+		} catch (error) {
+			console.log(error)
+			result = false;
+		}
+		return result;
+	},
 }

@@ -11,6 +11,13 @@ import { LinearGradient } from 'expo';
 import IconAntDesign from '@expo/vector-icons/AntDesign';
 
 export default class FormularioSteps extends React.Component  {
+
+  async cotizarEvento()
+  {
+    console.log(this.props.screenProps)
+
+  }
+
   render() {
     return (
       <View
@@ -99,6 +106,7 @@ export default class FormularioSteps extends React.Component  {
         </ScrollView>
           <TouchableOpacity
             style={estilo.cotizarBoton}
+            onPress= { () => this.cotizarEvento()}
           >
             <View
               style={estilo.stepCirculoCotizar}
