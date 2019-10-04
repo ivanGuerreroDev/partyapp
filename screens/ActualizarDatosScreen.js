@@ -20,6 +20,8 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { DrawerActions } from 'react-navigation';
 var distritos = require('../datos/peruGeo/distritos.json');
 var limaArr= distritos['3927'];
+import Authentication from '../modules/authentication'
+
 export default class ActualizarDatosScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -27,9 +29,52 @@ export default class ActualizarDatosScreen extends React.Component {
   constructor(props) {
     super(props);    
     this.state = {
-      fechaNacimiento: ''
+      usuario : '',
+      nombreCompleto: '',
+      fechaNacimiento: '',
+      email: '' ,
+      genero : '',
+      telefono : '',
+      celular: '',
+      direccion: '',
+      distrito: ''
     }
   }
+
+  async componentDidMount()
+  {
+    Authentication.currentToken() .then((result) => {
+      this.setState({
+        usuario : result.username ? result.username : '',
+        nombreCompleto: result.nombreCompleto ? result.nombreCompleto: '',
+        fechaNacimiento: result.fechaNacimiento ? result.fechaNacimiento: '',
+        email : result.email ? result.email : '',
+        genero : result.genero ? result.genero : '',
+        telefono : result.telefono ? result.telefono : '',
+        celular: result.celular ? result.celular : '',
+        direccion : result.direccion ? result.direccion : '',
+        distrito : result.distrito ? result.distrito : ''
+
+      })
+    })
+  }
+
+  async updateUser()
+  {
+    this.setState({ email:this.state.email.toLowerCase(),loading:true });
+    const { usuario, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular} = this.state;
+    const username = usuario
+    Authentication.update({username, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular})
+        .then((result) => {
+            console.log(result)
+            if(result){
+                alert("Actualizado con exito")
+            }else{
+                alert("Error al intentar actualizar")
+            }
+    })
+  }
+
   render() {  
     arrayDistritos =[]
     limaArr.map((prop, key) => {
@@ -43,18 +88,21 @@ export default class ActualizarDatosScreen extends React.Component {
           <TextInput 
             style={estilo.inputElement}
             placeholder='Usuario' 
+            value= { this.state.usuario}
             onChangeText={(text) => this.setState({usuario: text})}
             autoCapitalize = 'none'
           />
           <TextInput 
             style={estilo.inputElement}
             placeholder='Email' 
+            value = {this.state.email}
             onChangeText={(text) => this.setState({email: text})}
             autoCapitalize = 'none'
           />
           <TextInput 
             style={estilo.inputElement}
             placeholder='Nombre y Apellido' 
+            value = {this.state.nombreCompleto}
             onChangeText={(text) => this.setState({nombreCompleto: text})}
           />
           <View  style={{width:'100%'}}>
@@ -65,7 +113,7 @@ export default class ActualizarDatosScreen extends React.Component {
               mode="date"
               placeholder="Fecha de Nacimiento"
               format="YYYY-MM-DD"
-              minDate={new Date().toISOString().slice(0,10)}
+              maxDate={new Date().toISOString().slice(0,10)}
               iconSource={require('../assets/images/calendar-icon.png')}
               confirmBtnText="Confirmar"
               cancelBtnText="Cancelar"
@@ -99,18 +147,21 @@ export default class ActualizarDatosScreen extends React.Component {
           <TextInput 
             style={estilo.inputElement}
             placeholder='Teléfono' 
+            value ={this.state.telefono}
             onChangeText={(text) => this.setState({telefono: text})}
             keyboardType = 'numeric'
           />
           <TextInput 
             style={estilo.inputElement}
             placeholder='Celular' 
+            value ={ this.state.celular}
             onChangeText={(text) => this.setState({celular: text})}
             keyboardType = 'numeric'
           />
           <TextInput 
             style={estilo.inputElement}
             placeholder='Direccion' 
+            value={this.state.direccion}
             onChangeText={(text) => this.setState({direccion: text})}
           />
           <View style={{marginTop: -20}}>
@@ -122,6 +173,7 @@ export default class ActualizarDatosScreen extends React.Component {
           </View>
           <View style={{alignItems:'center', marginTop: 30}}>
             <TouchableOpacity
+                onPress={() => this.updateUser()}
                 style={[estilo.button,{marginBottom:20}]} 
             >
                 <LinearGradient

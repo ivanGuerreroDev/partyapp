@@ -25,13 +25,20 @@ export default class ListaFiestasScreen extends React.Component {
   {
     super(props)
     this.state = {
-      fiestas : []
+      fiestas : [],
+      isRefreshing : true
     }
   }
 
   async componentDidMount()
   {
+    this.getFiestas()
+  }
+
+  getFiestas()
+  {
     Eventos.getFiestas().then((fiestas) => {
+          this.setState({isRefreshing : false})
           if(fiestas && fiestas.valid){
             this.setState({
               fiestas : fiestas.result
@@ -40,6 +47,13 @@ export default class ListaFiestasScreen extends React.Component {
               alert("Error obteniendo fiestas")
           }
     })
+  }
+
+  onRefresh()
+  {
+    this.setState({ isRefreshing: true }); // true isRefreshing flag for enable pull to refresh indicator
+    //Send local data (actions) to server
+    this.getFiestas()
   }
 
   render() {   
@@ -57,6 +71,8 @@ export default class ListaFiestasScreen extends React.Component {
             <FlatList 
               data = {this.state.fiestas}
               keyExtractor = { (item, index) => item._id}
+              refreshing={this.state.isRefreshing}
+              onRefresh={() => this.onRefresh()}
               renderItem={({ item }) => {
                 return(
                   <TouchableOpacity 
