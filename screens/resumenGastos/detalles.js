@@ -23,11 +23,11 @@ export default class detalles extends React.Component {
         <HeaderInt 
           screenProps={{
             prevNav: ()=> this.props.navigation.goBack(),
-            titulo: 'Baby Shower'
+            titulo: this.props.navigation.getParam('tipoFiesta',"")
           }}
         />
         <ScrollView style={{flex:1}} contentContainerStyle={styles.contentContainer}>
-          <Text style={{fontSize:20, color: '#8F4D93', fontWeight:'700', textAlign: 'center'}}>Animación</Text>
+          <Text style={{fontSize:20, color: '#8F4D93', fontWeight:'700', textAlign: 'center'}}>{this.props.navigation.getParam('servicio',"")}</Text>
         
           <View style={{paddingHorizontal: 40, paddingVertical:40, borderBottomColor: '#C1C1C1', borderBottomWidth:1}}>
             <Text style={{fontSize:16, color: '#333', fontWeight:'700',}}>Nombre Proveedor</Text>
