@@ -9,13 +9,35 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import IconAntDesign from '@expo/vector-icons/AntDesign';
+import Eventos from '../modules/eventos'
 
 export default class FormularioSteps extends React.Component  {
 
   async cotizarEvento()
   {
-    console.log(this.props.screenProps)
-
+    const { datosFiesta , checkboxes} = this.props.screenProps
+    const { tipoFiesta , nombreEvento , fechaEvento, horaEvento, adultos, ninos } = datosFiesta
+    
+    let servicios_solicitados = []
+    for (key in checkboxes)
+    {
+      if(checkboxes[key])
+      {
+        servicios_solicitados.push(key)
+      }
+    }
+    const nombre = nombreEvento
+    const fecha_del_evento = fechaEvento
+    const hora_del_evento = horaEvento
+    const local = false
+    const categoria = tipoFiesta
+    const servicios = []
+    //this.props.screenProps.cargando();
+    Eventos.saveFiesta( { nombre, fecha_del_evento , hora_del_evento , local , categoria , adultos, ninos, servicios_solicitados , servicios})
+          .then((result) => {
+            //this.props.screenProps.cargado();
+            console.log(result)
+      })
   }
 
   render() {

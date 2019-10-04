@@ -3305,9 +3305,8 @@ export default class FormularioFiestaScreen extends React.Component  {
             screenProps={{
               changeStep: (e) => this.setState({step: e}),
               currentStep: () => this.state.step,
-              datosFiesta : this.state.datosFiesta.tipoFiesta,
-              servicios : this.state.checkboxes,
-              navigation : this.props.navigation
+              datosFiesta : this.state.datosFiesta,
+              checkboxes : this.state.checkboxes,
             }}
           />
 

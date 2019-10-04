@@ -6,6 +6,20 @@ const headers = {
 }
 
 export default {
+
+    async saveFiesta( data )
+    {
+        console.log(data)
+        let config = {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: headers
+        }
+        console.log(`${server}/api/eventos/nuevaFiesta`) 
+        return fetch(`${server}/api/eventos/nuevaFiesta`, config) 
+    },
+
+
     async getCotizaciones (data) {
         console.log(data)
         let config = {

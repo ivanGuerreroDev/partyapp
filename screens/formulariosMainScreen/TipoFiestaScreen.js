@@ -24,7 +24,8 @@ export default class TipoFiestaScreen extends React.Component  {
   constructor(props) {
     super(props);    
     this.state = { 
-      isLoading : false
+      isLoading : false,
+      datosFiesta: this.props.screenProps.getDatosFiesta(),
     };
   }
   render() {
@@ -485,7 +486,7 @@ export default class TipoFiestaScreen extends React.Component  {
  
 
   setTipoFiesta = (value) => {
-    var datos = this.props.screenProps.getDatosFiesta;
+    var datos = this.state.datosFiesta;
     datos['tipoFiesta']=value;
     this.props.screenProps.setDatosFiesta(datos);
     this.props.navigation.navigate('FormularioFiesta');

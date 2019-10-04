@@ -10,7 +10,7 @@ import {
   PickerIOS,
   TouchableOpacity,
   TextInput,
-  Button,
+  LayoutAnimation,
   Modal,
   TouchableWithoutFeedback
 } from 'react-native';
@@ -77,23 +77,80 @@ export default class DatosFiestaScreen extends ValidationComponent  {
 
   SiguientePantalla = () => {
     // Call ValidationComponent validate method
-    //this.props.navigation.navigate('TipoFiesta');
-    var args = {
-      inputNombreEvento: {minlength:3, maxlength:15, required: true},
-      inputFechaEvento: {date: 'YYYY-MM-DD', required: true},
-      inputHoraEvento: {date: 'HH:mm', required: true},
-      inputAdultos: {number:true, required: true},
-      inputNinos: {number:true, required: true},
-    }
-    //this.validate(args)
-    if (this.validate(args)) {
+    var datos = this.props.screenProps.getDatosFiesta;
+    const validateNombreEvento = this.validateNombreEvento()
+    const validateFechaEvento = this.validateFechaEvento()
+    const validateHoraEvento = this.validateHoraEvento()
+    const validateAdultos = this.validateAdultos()
+    const validateNinos = this.validateNinos()
+    if (validateNombreEvento && validateFechaEvento && validateHoraEvento && validateAdultos && validateNinos) {
       this.setState({isLoading: true});
       this.props.screenProps.setState(this.state)
+      datos['nombreEvento']=this.state.inputNombreEvento.value;
+      datos["fechaEvento"]=this.state.inputFechaEvento.value;
+      datos["horaEvento"]=this.state.inputHoraEvento.value;
+      datos["adultos"]=this.state.inputAdultos.value;
+      datos["ninos"]=this.state.inputNinos.value;
+      this.props.screenProps.setDatosFiesta(datos);
       this.props.navigation.navigate('TipoFiesta');
     }else{
       this.setState({errorPopup: false});
     }
   }
+
+  validateNombreEvento(){
+    const { inputNombreEvento } = this.state;
+    const nombreEventoValid = (inputNombreEvento.value != null && inputNombreEvento.value.length > 3 && inputNombreEvento.value.length <15);
+    LayoutAnimation.easeInEaseOut()
+    this.setState({ nombreEventoValid })
+    return nombreEventoValid
+  }
+
+  validateFechaEvento(){
+    const { inputFechaEvento } = this.state;
+    var regex_date = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
+    var parts   = inputFechaEvento.value.split("-");
+    var day     = parseInt(parts[2], 10);
+    var month   = parseInt(parts[1], 10);
+    var year    = parseInt(parts[0], 10);
+
+    var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+    {
+        monthLength[1] = 29;
+    }
+
+    const fechaEventoValid = (inputFechaEvento.value != null && regex_date.test(inputFechaEvento.value) && (year > 1000 || year < 3000 || month !== 0 || month <= 12) && day > 0 && day <= monthLength[month - 1]);
+    LayoutAnimation.easeInEaseOut()
+    this.setState({ fechaEventoValid })
+    return fechaEventoValid
+  }
+
+  validateHoraEvento(){
+    const { inputHoraEvento } = this.state;
+    var regex_date = /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/;
+    const horaEventoValid = (inputHoraEvento.value != null && regex_date.test(inputHoraEvento.value));
+    LayoutAnimation.easeInEaseOut()
+    this.setState({ horaEventoValid })
+    return horaEventoValid
+  }
+
+  validateAdultos(){
+    const { inputAdultos } = this.state;
+    const adultosValid = (inputAdultos.value != null && inputAdultos.value.length > 0 && !isNaN(inputAdultos.value));
+    LayoutAnimation.easeInEaseOut()
+    this.setState({ adultosValid })
+    return adultosValid
+  }
+
+  validateNinos(){
+    const { inputNinos } = this.state;
+    const ninosValid = (inputNinos.value != null && inputNinos.value.length > 0 && !isNaN(inputNinos.value));
+    LayoutAnimation.easeInEaseOut()
+    this.setState({ ninosValid })
+    return ninosValid
+  }
+
   ChangeInput = (input, value, name) => {
     this.setState( { [input] :{value: value, name: name}})
   }
@@ -122,8 +179,11 @@ export default class DatosFiestaScreen extends ValidationComponent  {
       this.setState({locales: actual});
     }
   }
+
+ 
   
   render() {
+    let { errors = {} } = this.state;
     const { alquilarLocal } = this.state;
     arrayDistritos =[]
     limaArr.map((prop, key) => {
@@ -169,14 +229,14 @@ export default class DatosFiestaScreen extends ValidationComponent  {
                 /> 
                 <View style={styles.formContainer}>
                   <TextInput
-                    ref='inputNombreEvento'
+                    ref="inputNombreEvento"
                     placeholder='Dale un nombre a tu evento'
                     style={styles.input}
                     onChangeText={(value) => this.ChangeInput('inputNombreEvento', value, 'Nombre de mi Evento')}
                     value={this.state.inputNombreEvento.value}   
                   />
                   <TouchableOpacity 
-                    style={this.isFieldInError('inputNombreEvento')?styles.errorForm:styles.novisible}
+                    style={errors.inputNombreEvento?styles.errorForm:styles.novisible}
                     onPress={() => this.errorPopup(this.getErrorsInField('inputNombreEvento'))}
                   >
                     <IconAntDesign
@@ -189,7 +249,7 @@ export default class DatosFiestaScreen extends ValidationComponent  {
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', width:300}}> 
                   <View style={[styles.formContainer, {width: 145}]}>
                     <DatePicker 
-                      ref='inputFechaEvento'
+                      ref="inputFechaEvento"
                       style={styles.dateInput}
                       date={this.state.inputFechaEvento.value}
                       mode="date"
@@ -231,7 +291,7 @@ export default class DatosFiestaScreen extends ValidationComponent  {
                   </View>
                   <View style={[styles.formContainer, {width: 145}]}> 
                     <DatePicker
-                      ref='inputHoraEvento'
+                      ref="inputHoraEvento"
                       style={styles.dateInput}
                       date={this.state.inputHoraEvento.value} 
                       mode="time"
@@ -441,7 +501,7 @@ export default class DatosFiestaScreen extends ValidationComponent  {
                       }}
                     >Adultos</Text>
                     <TextInput
-                      ref='inputAdultos'
+                      ref="inputAdultos"
                       style={styles.input} 
                       keyboardType = 'numeric'
                       onChangeText={(value) => this.ChangeInput('inputAdultos',value, 'Adultos')}
@@ -467,7 +527,7 @@ export default class DatosFiestaScreen extends ValidationComponent  {
                       }}
                     >Niños</Text>
                     <TextInput
-                      ref='inputNinos'
+                      ref="inputNinos"
                       style={styles.input} 
                       onChangeText={(value) => this.ChangeInput('inputNinos',value, 'Niños')}
                       value={this.state.inputNinos.value}
