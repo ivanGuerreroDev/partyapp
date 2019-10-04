@@ -37,7 +37,8 @@ export default class ActualizarDatosScreen extends React.Component {
       telefono : '',
       celular: '',
       direccion: '',
-      distrito: ''
+      distrito: '',
+      _id: ''
     }
   }
 
@@ -45,6 +46,7 @@ export default class ActualizarDatosScreen extends React.Component {
   {
     Authentication.currentToken() .then((result) => {
       this.setState({
+        _id : result.id,
         usuario : result.username ? result.username : '',
         nombreCompleto: result.nombreCompleto ? result.nombreCompleto: '',
         fechaNacimiento: result.fechaNacimiento ? result.fechaNacimiento: '',
@@ -62,9 +64,9 @@ export default class ActualizarDatosScreen extends React.Component {
   async updateUser()
   {
     this.setState({ email:this.state.email.toLowerCase(),loading:true });
-    const { usuario, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular} = this.state;
+    const { _id, usuario, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular} = this.state;
     const username = usuario
-    Authentication.update({username, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular})
+    Authentication.update({_id, username, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular})
         .then((result) => {
             console.log(result)
             if(result){

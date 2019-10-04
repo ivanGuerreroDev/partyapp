@@ -20,6 +20,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { DrawerActions } from 'react-navigation';
 var distritos = require('../datos/peruGeo/distritos.json');
 var limaArr= distritos['3927'];
+import Authentication from '../modules/authentication'
 export default class CambiarContrasenaScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -27,8 +28,42 @@ export default class CambiarContrasenaScreen extends React.Component {
   constructor(props) {
     super(props);    
     this.state = {
+      _id: "",
+      contrasena : "",
+      contrasena2: "",
     }
   }
+
+  async componentDidMount()
+  {
+    Authentication.currentToken() .then((result) => {
+      this.setState({
+        _id : result.id
+      })
+    })
+  }
+
+
+  async changePassword()
+  {
+      const { _id, contrasena , contrasena2 } = this.state
+      if(contrasena === contrasena2)
+      {
+        const password = contrasena
+        Authentication.update({_id , password})
+            .then((result) => {
+                console.log(result)
+                if(result){
+                    alert("Actualizado con exito")
+                }else{
+                    alert("Error al intentar actualizar")
+                }
+        })
+      }else{
+        alert("Las contraseñas deben coincidir")
+      }
+  }
+
   render() {  
     return (
       <View style={styles.container}>
@@ -38,6 +73,7 @@ export default class CambiarContrasenaScreen extends React.Component {
           <TextInput 
             style={estilo.inputElement}
             placeholder='Contraseña' 
+            value={this.state.contrasena}
             onChangeText={(text) => this.setState({contrasena: text})}
             autoCapitalize = 'none'
             secureTextEntry={true}
@@ -45,6 +81,7 @@ export default class CambiarContrasenaScreen extends React.Component {
           <TextInput 
             style={estilo.inputElement}
             placeholder='Repetir Contraseña' 
+            value={this.state.contrasena2}
             onChangeText={(text) => this.setState({contrasena2: text})}
             autoCapitalize = 'none'
             secureTextEntry={true}
@@ -52,6 +89,7 @@ export default class CambiarContrasenaScreen extends React.Component {
           
           <View style={{alignItems:'center', marginTop: 30}}>
             <TouchableOpacity
+            onPress = {()=> this.changePassword()}
                 style={[estilo.button,{marginBottom:20}]} 
             >
                 <LinearGradient
