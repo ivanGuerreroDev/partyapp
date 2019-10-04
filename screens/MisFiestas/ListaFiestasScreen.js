@@ -9,16 +9,39 @@ import {
   Picker,
   TouchableOpacity,
   TextInput,
-  Button
+  FlatList
 } from 'react-native';
 import HeaderInt from '../../navigation/HeaderInt'; 
 import styles from '../../assets/styles'; 
 import { Ionicons } from '@expo/vector-icons';
+import Eventos from '../../modules/eventos'
 
 export default class ListaFiestasScreen extends React.Component {
   static navigationOptions = {
     header: null,
 };
+
+  constructor(props)
+  {
+    super(props)
+    this.state = {
+      fiestas : []
+    }
+  }
+
+  async componentDidMount()
+  {
+    Eventos.getFiestas().then((fiestas) => {
+          if(fiestas && fiestas.valid){
+            this.setState({
+              fiestas : fiestas.result
+            })
+          }else{
+              alert("Error obteniendo fiestas")
+          }
+    })
+  }
+
   render() {   
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -31,32 +54,41 @@ export default class ListaFiestasScreen extends React.Component {
         <ScrollView style={{flex:1}}>
           <View style={{backgroundColor:'#fff', alignItems: 'center', padding:20, flex:1}}>
             <Text style={{fontSize: 22, marginBottom:30}}>Selecciona tu fiesta del listado</Text>
-            <TouchableOpacity 
-              style={estilos.itemFiestaContainer}
-              onPress={() => this.props.navigation.navigate('ListaProveedores')} 
-            >
-              <View style={{width:250}}>
-                <Text style={{fontSize:18, fontWeight: '700'}}>Nombre de la fiesta</Text>
-                <Text style={{marginBottom:30}}>02/02/2019</Text>
-                <Text style={{marginTop:'auto'}}>Baby Shower</Text>
-              </View>
-              <View style={{width:50}}>
-                <View style={{flexDirection: 'row'}}>
-                  <Ionicons
-                    name="ios-document" size={18} color="#333" 
-                    style={{marginRight:5}}
-                  />
-                  <Text style={{color: '#333'}}>3</Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                  <Ionicons
-                    name="ios-checkmark" size={22} color="#333" 
-                    style={{marginRight:5}}
-                  />
-                  <Text style={{color: '#333'}}>3</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
+            <FlatList 
+              data = {this.state.fiestas}
+              keyExtractor = { (item, index) => item._id}
+              renderItem={({ item }) => {
+                return(
+                  <TouchableOpacity 
+                    style={estilos.itemFiestaContainer}
+                    onPress={() => this.props.navigation.navigate('ListaProveedores')} 
+                  >
+                    <View style={{width:250}}>
+                      <Text style={{fontSize:18, fontWeight: '700'}}>{item.nombre}</Text>
+                      <Text style={{marginBottom:30}}>{item.fecha_del_evento}</Text>
+                      <Text style={{marginTop:'auto'}}>{item.categoria}</Text>
+                    </View>
+                    <View style={{width:50}}>
+                      <View style={{flexDirection: 'row'}}>
+                        <Ionicons
+                          name="ios-document" size={18} color="#333" 
+                          style={{marginRight:5}}
+                        />
+                        <Text style={{color: '#333'}}>{item.servicios_solicitados.length}</Text>
+                      </View>
+                      <View style={{flexDirection: 'row'}}>
+                        <Ionicons
+                          name="ios-checkmark" size={22} color="#333" 
+                          style={{marginRight:5}}
+                        />
+                        <Text style={{color: '#333'}}>{item.servicios.length}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                );
+              }}
+
+            />
           </View>
         </ScrollView>
       </View>

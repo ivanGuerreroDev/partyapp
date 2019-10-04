@@ -18,36 +18,15 @@ export default {
         console.log(`${server}/api/eventos/nuevaFiesta`) 
         return fetch(`${server}/api/eventos/nuevaFiesta`, config) 
     },
-
-
-    async getCotizaciones (data) {
+    async getFiestas (data) {
         console.log(data)
         let config = {
             method: 'POST',
             body: JSON.stringify(data),
             headers: headers
         }
-        console.log(`${server}/api/cotizaciones/getCotizaciones`) 
-        return fetch(`${server}/api/cotizaciones/getCotizaciones`, config) 
+        console.log(`${server}/api/eventos/getFiestas`) 
+        return fetch(`${server}/api/eventos/getFiestas`, config) 
     },  
-    async getCotizacionesAceptadas (data) {
-        console.log(data)
-        let config = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: headers
-        }
-        console.log(`${server}/api/cotizaciones/getCotizaciones`) 
-        return fetch(`${server}/api/cotizaciones/getCotizaciones`, config) 
-    },
-    async cotizar (data) {
-        console.log(JSON.stringify(data))
-        let config = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: headers
-        }
-        console.log(`${server}/api/users`) 
-        return fetch(`${server}/api/users`, config) 
-    },  
+ 
 }

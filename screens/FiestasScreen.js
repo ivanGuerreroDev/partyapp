@@ -27,6 +27,8 @@ export default class FiestasScreen extends React.Component {
               getDatosFiesta: () => this.state.datosNuevaFiesta,
               setState: (arr)=> this.props.screenProps.setState(arr),
               getState: ()=> this.props.screenProps.getState(),
+              cargando: ()=> this.props.screenProps.cargando(),
+              cargado: ()=> this.props.screenProps.cargado(),
 
             }}
             

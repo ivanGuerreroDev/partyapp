@@ -7,7 +7,7 @@ import {
   ScrollView,
   Platform
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient'
 import IconAntDesign from '@expo/vector-icons/AntDesign';
 import Eventos from '../modules/eventos'
 
@@ -15,7 +15,7 @@ export default class FormularioSteps extends React.Component  {
 
   async cotizarEvento()
   {
-    const { datosFiesta , checkboxes} = this.props.screenProps
+    const { datosFiesta , checkboxes, navigation} = this.props.screenProps
     const { tipoFiesta , nombreEvento , fechaEvento, horaEvento, adultos, ninos } = datosFiesta
     
     let servicios_solicitados = []
@@ -32,11 +32,16 @@ export default class FormularioSteps extends React.Component  {
     const local = false
     const categoria = tipoFiesta
     const servicios = []
-    //this.props.screenProps.cargando();
     Eventos.saveFiesta( { nombre, fecha_del_evento , hora_del_evento , local , categoria , adultos, ninos, servicios_solicitados , servicios})
           .then((result) => {
-            //this.props.screenProps.cargado();
-            console.log(result)
+            if(result && result.valid)
+            {
+              alert("Registrado Con exito!")
+              navigation.navigate("DatosFiesta")
+            }else{
+              alert("Error intentando registrar información")
+            }
+            
       })
   }
 

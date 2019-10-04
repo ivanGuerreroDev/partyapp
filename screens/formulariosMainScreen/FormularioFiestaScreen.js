@@ -3307,6 +3307,7 @@ export default class FormularioFiestaScreen extends React.Component  {
               currentStep: () => this.state.step,
               datosFiesta : this.state.datosFiesta,
               checkboxes : this.state.checkboxes,
+              navigation : this.props.navigation
             }}
           />
 
