@@ -91,6 +91,8 @@ export default class DatosFiestaScreen extends ValidationComponent  {
       datos["horaEvento"]=this.state.inputHoraEvento.value;
       datos["adultos"]=this.state.inputAdultos.value;
       datos["ninos"]=this.state.inputNinos.value;
+      datos["direccion"]=this.state.inputDireccion.value;
+      datos["distrito"] = this.state.inputDistrito.value;
       this.props.screenProps.setDatosFiesta(datos);
       this.props.navigation.navigate('TipoFiesta');
     }else{

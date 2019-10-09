@@ -16,7 +16,7 @@ export default class FormularioSteps extends React.Component  {
   async cotizarEvento()
   {
     const { datosFiesta , checkboxes, navigation} = this.props.screenProps
-    const { tipoFiesta , nombreEvento , fechaEvento, horaEvento, adultos, ninos } = datosFiesta
+    const { tipoFiesta , nombreEvento , fechaEvento, horaEvento, adultos, ninos, direccion, distrito } = datosFiesta
     
     let servicios_solicitados = []
     for (key in checkboxes)
@@ -30,9 +30,9 @@ export default class FormularioSteps extends React.Component  {
     const fecha_del_evento = fechaEvento
     const hora_del_evento = horaEvento
     const local = false
-    const categoria = tipoFiesta
+    const categoria = tipoFiesta 
     const servicios = []
-    Eventos.saveFiesta( { nombre, fecha_del_evento , hora_del_evento , local , categoria , adultos, ninos, servicios_solicitados , servicios})
+    Eventos.saveFiesta( { nombre, fecha_del_evento , hora_del_evento , local , categoria , adultos, ninos, direccion, distrito, servicios_solicitados , servicios})
           .then((result) => {
             if(result && result.valid)
             {
