@@ -72,7 +72,7 @@ export default class servicio extends React.Component {
                   <Text style={{color:'#333', fontWeight:'700'}}>S/.100 - 200</Text>
                   <View style={{flexDirection:'row', alignItems: 'center'}}>
                     <MaterialIcons name="person" size={12} color="#333"/>
-                    <Text style={{color:'#333', fontWeight:'700', marginLeft:5}}>3</Text>
+                    <Text style={{color:'#333', fontWeight:'700', marginLeft:5}}>{this.props.navigation.getParam('invitados',"0")}</Text>
                   </View>
                 </TouchableOpacity>
                 

@@ -1,0 +1,59 @@
+{
+    "animacion":[
+        {
+            "tipoFiesta":"fiesta infantil",
+            "costo":160
+        },
+        {
+            "tipoFiesta":"fiesta adulto",
+            "costo":250
+        }
+    ],
+    "horaloca":{
+        "costo":250
+    },
+    "filmacionfotografia":[
+        {
+            "tipoFiesta":"matrimonio",
+            "costo":500
+        },
+        {
+            "tipoFiesta":"cumpleaños",
+            "costo": 250
+        },{
+            "tipoFiesta":"quiceaños",
+            "costo": 250
+        } 
+    ],
+    "piñateria":[
+        {
+            "tipoFiesta":"fiesta infantil",
+            "costo":18
+        },
+        {
+            "tipoFiesta":"fiesta adulto",
+            "costo":22
+        }
+    ],
+    "globos":{
+        "costo":9.6
+    },
+    "vasos":{
+        "costo":3.5
+    },
+    "caja / bolsa de torta":{
+        "costo":3.5
+    },
+    "letrero":{
+        "costo":10
+    },
+    "servilletas":{
+        "costo":3
+    },
+    "ambientacion":{
+        "costo":350
+    },
+    "mobiliario":{
+        "costo":350
+    }  
+}

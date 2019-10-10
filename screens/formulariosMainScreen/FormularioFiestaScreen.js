@@ -24,7 +24,7 @@ import IconAntDesign from '@expo/vector-icons/AntDesign';
 import { Dropdown } from 'react-native-material-dropdown';
 import * as Animatable from 'react-native-animatable';
 import Authentication from '../../modules/authentication'
-
+const preciosAprox = require("../../datos/preciosAprox.json")
 var categorias = require('../../datos/categoriasFormulario.json');
 
   
@@ -3462,13 +3462,6 @@ export default class FormularioFiestaScreen extends React.Component  {
     this.setState({popupCheckForm: false});
   }
 
-  _changeInput = (tipo, key, value) => {
-    var arrInputs = this.state.inputs;
-    arrInputs[tipo][key] = value;
-    this.setState({inputs: arrInputs});
-  }
-
-
   _itemsCheck = (checkbox, step) => {   
     var tipos = {
       "fiesta infantil": "fiestaInfantil",
@@ -3524,8 +3517,8 @@ export default class FormularioFiestaScreen extends React.Component  {
       this.setState({popupInputMesagge: true})
     }
     this.setState({checkboxes: valores});
-
-    
+    //actualizar precios aproximado
+    this.calcularPreciosAprox(value , 1)
   }
 
   _CheckboxInput = (tipo, value) =>{
@@ -3534,6 +3527,47 @@ export default class FormularioFiestaScreen extends React.Component  {
     actual = !actual;
     valores[tipo][value] = actual;
     this.setState({inputs : valores});
+    
+  }
+
+  _changeInput = (tipo, key, value) => {
+    var arrInputs = this.state.inputs;
+    arrInputs[tipo][key] = value;
+    this.setState({inputs: arrInputs});
+    //actualizar precios aproximado
+    this.calcularPreciosAprox(tipo , value)
+
+  }
+
+  calcularPreciosAprox( tipo , value)
+  {
+    try {
+      let { tipoFiesta } = this.state.datosFiesta
+      let { precioAprox } = this.state
+      tipoFiesta = tipoFiesta.toLowerCase()
+      tipo = tipo.toLowerCase()
+      const preciosA = preciosAprox[tipo]
+      let nuevoCosto = 0 //'0 - 0'
+      if(!precioAprox || (precioAprox && precioAprox === "0 - 0")) precioAprox = 0
+      if( tipo === "animacion" || tipo === "filmacionFotografia" || tipo === "piñateria")
+      {
+        for(key in preciosA){
+          
+          if(preciosA[key].tipoFiesta === tipoFiesta)
+          {
+            nuevoCosto = value * preciosA[key].costo
+          } 
+        }
+      }else{
+        nuevoCosto = value * preciosA.costo
+      }
+      precioAprox = precioAprox + nuevoCosto
+      this.setState({
+        precioAprox 
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   errorPopup = (errors) =>{

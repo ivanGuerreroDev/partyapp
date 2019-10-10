@@ -73,7 +73,8 @@ export default class fiestas extends React.Component {
                     style={{paddingVertical:25, paddingHorizontal: 40, borderBottomColor: '#C1C1C1', borderBottomWidth:1}}
                     onPress={() => this.props.navigation.navigate('servicio',{ 
                       tipoFiesta : item.categoria,
-                      servicios : item.servicios_solicitados
+                      servicios : item.servicios_solicitados,
+                      invitados : item.adultos + item.ninos
                     })}   
                   >
                     <View style={{flexDirection: 'row'}}>
@@ -92,7 +93,7 @@ export default class fiestas extends React.Component {
                           <FeatherIcon name="clock" size={10} color="#333"/>
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Text style={{color:'#333333', fontSize:10, marginRight:10}}>{""}</Text>
+                          <Text style={{color:'#333333', fontSize:10, marginRight:10}}>{item.direccion}</Text>
                           <MaterialIcons name="location-on" size={10} color="#333"/>
                         </View>
                       </View>

@@ -28,7 +28,7 @@ export default class CambiarContrasenaScreen extends React.Component {
   constructor(props) {
     super(props);    
     this.state = {
-      _id: "",
+      id: "",
       contrasena : "",
       contrasena2: "",
     }
@@ -38,7 +38,7 @@ export default class CambiarContrasenaScreen extends React.Component {
   {
     Authentication.currentToken() .then((result) => {
       this.setState({
-        _id : result.id
+        id : result.id
       })
     })
   }
@@ -46,11 +46,11 @@ export default class CambiarContrasenaScreen extends React.Component {
 
   async changePassword()
   {
-      const { _id, contrasena , contrasena2 } = this.state
+      const { id, contrasena , contrasena2 } = this.state
       if(contrasena === contrasena2)
       {
         const password = contrasena
-        Authentication.update({_id , password})
+        Authentication.update({id , password})
             .then((result) => {
                 console.log(result)
                 if(result){

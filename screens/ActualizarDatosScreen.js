@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Image,
+  AsyncStorage,
   Platform,
   ScrollView,
   StyleSheet,
@@ -38,7 +38,8 @@ export default class ActualizarDatosScreen extends React.Component {
       celular: '',
       direccion: '',
       distrito: '',
-      _id: ''
+      id: '',
+      token : ''
     }
   }
 
@@ -46,7 +47,8 @@ export default class ActualizarDatosScreen extends React.Component {
   {
     Authentication.currentToken() .then((result) => {
       this.setState({
-        _id : result.id,
+        id : result.id,
+        token : result.token,
         usuario : result.username ? result.username : '',
         nombreCompleto: result.nombreCompleto ? result.nombreCompleto: '',
         fechaNacimiento: result.fechaNacimiento ? result.fechaNacimiento: '',
@@ -64,13 +66,29 @@ export default class ActualizarDatosScreen extends React.Component {
   async updateUser()
   {
     this.setState({ email:this.state.email.toLowerCase(),loading:true });
-    const { _id, usuario, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular} = this.state;
+    const { id, usuario, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular, token} = this.state;
     const username = usuario
-    Authentication.update({_id, username, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular})
-        .then((result) => {
+    Authentication.update({id, username, email, nombreCompleto , fechaNacimiento, genero, direccion , distrito, telefono , celular})
+        .then(async (result) => {
             console.log(result)
             if(result){
-                alert("Actualizado con exito")
+              //update token
+              const auth = {
+                uid: id,
+                id ,
+                token ,
+                usuario ,
+                nombreCompleto,
+                fechaNacimiento,
+                email,
+                genero,
+                telefono,
+                celular,
+                direccion,
+                distrito
+              }
+              await AsyncStorage.setItem('token', JSON.stringify(auth));
+              alert("Actualizado con exito")
             }else{
                 alert("Error al intentar actualizar")
             }
