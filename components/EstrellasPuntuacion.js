@@ -13,6 +13,7 @@ export default class EstrellasPuntuacion extends React.Component {
     for(var i = 0; i < puntaje; i++){
       estrellas.push(
         <AntDesign
+          key={i}
           name='star'
           color='#f4e950'
           size={20}
@@ -24,6 +25,7 @@ export default class EstrellasPuntuacion extends React.Component {
     for(var i = 0; i < restante; i++){
       estrellas.push(
         <AntDesign
+          key={i}
           name='star'
           color='#c4c4c4'
           size={20}
@@ -36,7 +38,7 @@ export default class EstrellasPuntuacion extends React.Component {
   render() {
     return (
       <View style={{flexDirection: 'row'}}>
-        {this._Estrellas(4)}
+        {this._Estrellas(this.props.puntaje)}
       </View>      
     );
   }

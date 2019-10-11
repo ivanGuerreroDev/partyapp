@@ -3,6 +3,7 @@ import principal from '../screens/formulariosMainScreen/armatufiestaPrincipal';
 import DatosFiestaScreen from '../screens/formulariosMainScreen/DatosFiestaScreen';
 import TipoFiestaScreen from '../screens/formulariosMainScreen/TipoFiestaScreen';
 import FormularioFiestaScreen from '../screens/formulariosMainScreen/FormularioFiestaScreen';
+import FormularioSteps from './FormularioSteps';
 
 
 export default createAppContainer(createStackNavigator({
@@ -12,6 +13,7 @@ export default createAppContainer(createStackNavigator({
   Main: TipoFiestaScreen,  
   TipoFiesta: TipoFiestaScreen,
   FormularioFiesta: FormularioFiestaScreen,
+  FormularioSteps : FormularioSteps
 }));
 
 

@@ -6,20 +6,64 @@ import {
   StyleSheet,
   Text,
   View,
-  Picker,
+  RefreshControl,
   TouchableOpacity,
-  TextInput,
+  FlatList,
   Button
 } from 'react-native';
 import HeaderInt from '../../navigation/HeaderInt'; 
 import EstrellasPuntuacion from '../../components/EstrellasPuntuacion'; 
 import styles from '../../assets/styles'; 
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import Eventos from '../../modules/eventos'
 
 export default class ListaProveedoresScreen extends React.Component {
   static navigationOptions = {
     header: null,
 };
+
+  constructor(props)
+  {
+    super(props)
+    this.state = {
+      proveedores : [],
+      cotizaciones : [],
+      isRefreshing : true
+    }
+  }
+
+  async componentDidMount()
+  {
+    this.props.navigation.addListener ('willFocus', () =>{
+      this.setState({
+        proveedores : [],
+        isRefreshing : true,
+        cotizaciones : this.props.navigation.getParam("cotizaciones",[])
+      },()=> this.getProveedores())
+    })
+  }
+
+  async getProveedores(){
+    const { cotizaciones  } = this.state
+    let proveedores = []
+    this.setState({
+      isRefreshing : true
+    })
+    for(key in cotizaciones)
+    {
+      const { id_proveedor } = cotizaciones[key]
+      await Eventos.getProveedorProfile({id_proveedor}).then((profile) => {
+            if(profile && profile.data){
+              proveedores.push(profile.data)
+            }
+      })
+    }
+    this.setState({
+      proveedores,
+      isRefreshing : false
+    })
+  }
+
   render() {   
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -56,22 +100,41 @@ export default class ListaProveedoresScreen extends React.Component {
                 </View>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity 
-              style={estilos.itemFiestaContainer}
-              onPress={() => this.props.navigation.navigate('Cotizacion')} 
-            >
-              <View style={{width:200}}>
-                <Text style={{fontSize:18, fontWeight: '700'}}>Nombre del Proveedor</Text>
-                <EstrellasPuntuacion 
-                  puntaje={4} 
-                />
-                <Text style={{marginTop: 10}}>Servicios</Text>
-                <Text style={{fontSize: 10}}>-Animación</Text>
-                <Text style={{fontSize: 10}}>-Filmación</Text>
-                <Text style={{fontSize: 10}}>-Catering</Text>
-              </View>
-              <Text style={{color:'#333', fontWeight: '700', fontSize:20, marginLeft: 'auto'}}>S/.300</Text>
-            </TouchableOpacity>
+            <FlatList data={this.state.proveedores}
+              extraData={this.state.proveedores}
+              keyExtractor={(item, index) => item.id_proveedor}
+              refreshControl={
+                <RefreshControl
+                    refreshing={this.state.isRefreshing}
+                    onRefresh={() => this.getProveedores()}
+                    colors={["#C63275"]}
+                 />
+              }
+              renderItem={({item}) => {
+                return(
+                  <TouchableOpacity 
+                    style={estilos.itemFiestaContainer}
+                    onPress={() => this.props.navigation.navigate('Cotizacion')} 
+                  >
+                  <View style={{width:200}}>
+                    <Text style={{fontSize:18, fontWeight: '700'}}>{item.nombreEmpresa}</Text>
+                    <EstrellasPuntuacion 
+                      puntaje={item.puntaje} 
+                    />
+                    <FlatList data={item.servicios}
+                      keyExtractor={(item, index) => index.toString()}
+                      renderItem={({ item }) =>{
+                        return (
+                          <Text style={{marginTop: 10, fontSize: 10}}>{item}</Text>
+                        )
+                      }}
+                    />
+                  </View>
+                  <Text style={{color:'#333', fontWeight: '700', fontSize:20, marginLeft: 'auto'}}>S/.300</Text>
+                </TouchableOpacity>
+                );
+              }}
+            />
           </View>
         </ScrollView>
       </View>

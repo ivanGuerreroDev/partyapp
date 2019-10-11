@@ -3566,7 +3566,7 @@ export default class FormularioFiestaScreen extends React.Component  {
         precioAprox 
       })
     } catch (error) {
-      console.log(error)
+      
     }
   }
 

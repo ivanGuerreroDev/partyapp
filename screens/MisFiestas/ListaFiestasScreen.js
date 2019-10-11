@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Picker,
+  RefreshControl,
   TouchableOpacity,
   TextInput,
   FlatList
@@ -32,28 +32,48 @@ export default class ListaFiestasScreen extends React.Component {
 
   async componentDidMount()
   {
-    this.getFiestas()
+    this.props.navigation.addListener ('willFocus', () =>{
+      this.getFiestas()
+    })
   }
 
-  getFiestas()
+  async getFiestas()
   {
+    this.setState({isRefreshing : true})
     Eventos.getFiestas().then((fiestas) => {
-          this.setState({isRefreshing : false})
           if(fiestas && fiestas.valid){
             this.setState({
               fiestas : fiestas.result
-            })
+            },() => this.getDetalleCotizacion())
           }else{
               alert("Error obteniendo fiestas")
           }
     })
   }
 
-  onRefresh()
-  {
-    this.setState({ isRefreshing: true }); // true isRefreshing flag for enable pull to refresh indicator
-    //Send local data (actions) to server
-    this.getFiestas()
+  async getDetalleCotizacion(){
+    let {fiestas} = this.state
+    let cotizaciones = []
+    for(key in fiestas)
+    {
+      console.log(fiestas[key])
+      let id_evento = fiestas[key]._id
+      if(fiestas[key]._id)
+      {
+        await Eventos.getCotizaciones({ id_evento }).then( (result) =>{
+          if( result && result.valid) 
+          {
+            let cotizacion = result.result
+            fiestas[key].cotizaciones = cotizacion
+            //cotizaciones.push(cotizacion)
+          }
+        })
+      }
+    }
+    this.setState({
+      fiestas,
+      isRefreshing : false
+    })
   }
 
   render() {   
@@ -70,14 +90,22 @@ export default class ListaFiestasScreen extends React.Component {
             <Text style={{fontSize: 22, marginBottom:30}}>Selecciona tu fiesta del listado</Text>
             <FlatList 
               data = {this.state.fiestas}
+              extraData = {this.state.fiestas}
               keyExtractor = { (item, index) => item._id}
-              refreshing={this.state.isRefreshing}
-              onRefresh={() => this.onRefresh()}
-              renderItem={({ item }) => {
+              refreshControl={
+              <RefreshControl
+                    refreshing={this.state.isRefreshing}
+                    onRefresh={() => this.getFiestas()}
+                    colors={["#C63275"]}
+                 />
+              }
+              renderItem={({ item,index }) => {
                 return(
                   <TouchableOpacity 
                     style={estilos.itemFiestaContainer}
-                    onPress={() => this.props.navigation.navigate('ListaProveedores')} 
+                    onPress={() => this.props.navigation.navigate('ListaProveedores', {
+                      cotizaciones : item.cotizaciones ? item.cotizaciones : []
+                    })} 
                   >
                     <View style={{width:250}}>
                       <Text style={{fontSize:18, fontWeight: '700'}}>{item.nombre}</Text>
@@ -90,7 +118,7 @@ export default class ListaFiestasScreen extends React.Component {
                           name="ios-document" size={18} color="#333" 
                           style={{marginRight:5}}
                         />
-                        <Text style={{color: '#333'}}>{item.servicios_solicitados.length}</Text>
+                        <Text style={{color: '#333'}}>{item.cotizaciones ? item.cotizaciones.length : 0}</Text>
                       </View>
                       <View style={{flexDirection: 'row'}}>
                         <Ionicons

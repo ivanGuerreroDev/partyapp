@@ -37,7 +37,7 @@ export default class FormularioSteps extends React.Component  {
             if(result && result.valid)
             {
               alert("Registrado Con exito!")
-              navigation.navigate("DatosFiesta")
+              this.props.navigation.navigate('DatosFiesta')
             }else{
               alert("Error intentando registrar información")
             }
