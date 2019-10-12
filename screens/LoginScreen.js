@@ -92,7 +92,7 @@ export default class Login extends Component {
             .then((result) => {
                 this.props.screenProps.cargado();
                 if(result){
-                    this.props.screenProps.setState({datosUsuario: result.user})
+                    this.props.screenProps.setState({datosUsuario: result})
                     this.props.screenProps.isLoggedIn();
                 }else{
                     alert("Usuario o Contraseña Incorrecta")

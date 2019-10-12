@@ -32,9 +32,26 @@ export default {
 		try {
             authData = await Authentication.login(data)
 			result = await authData.json()
-			console.log(result)
-			const auth = result.user
+			const auth ={
+				id:  result.user.id,
+				username : result.user.username,
+				email : result.user.email,
+				privilege : result.user.privilege,
+				token : result.user.token,
+				image: result.profile.image,
+				popupCheckForm : result.profile.popupCheckForm,
+				popupInputMesagge : result.profile.popupInputMesagge,
+				nombreCompleto : result.profile.nombreCompleto,
+				genero : result.profile.genero,
+				fechaNacimiento : result.profile.fechaNacimiento,
+				telefono: result.profile.telefono,
+				celular : result.profile.celular,
+				direccion : result.profile.direccion,
+				distrito : result.profile.distrito,
+				id_usuario : result.profile.id_usuario
+			}
 			await AsyncStorage.setItem('token', JSON.stringify(auth))
+			return auth
 		} catch (error) {
 			console.log(error)
 			result = false;
