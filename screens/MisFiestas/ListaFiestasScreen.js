@@ -46,7 +46,8 @@ export default class ListaFiestasScreen extends React.Component {
               fiestas : fiestas.result
             },() => this.getDetalleCotizacion())
           }else{
-              alert("Error obteniendo fiestas")
+            this.setState({ isRefreshing : false})
+            alert("Error obteniendo fiestas")
           }
     })
   }

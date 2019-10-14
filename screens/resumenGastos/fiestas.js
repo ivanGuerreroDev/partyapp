@@ -3,7 +3,7 @@ import {
   Image,
   Platform,
   ScrollView,
-  StyleSheet,
+  RefreshControl,
   TouchableOpacity,
   Text,
   FlatList,
@@ -37,24 +37,40 @@ export default class fiestas extends React.Component {
   getFiestas()
   {
     Eventos.getFiestas().then((fiestas) => {
-          this.setState({isRefreshing : false})
           if(fiestas && fiestas.valid){
             this.setState({
               fiestas : fiestas.result
-            })
+            },() => this.getDetalleCotizacion())
           }else{
-              alert("Error obteniendo fiestas")
+            this.setState({ isRefreshing : false})
+            alert("Error obteniendo fiestas")
           }
     })
   }
 
-  onRefresh()
-  {
-    this.setState({ isRefreshing: true }); // true isRefreshing flag for enable pull to refresh indicator
-    //Send local data (actions) to server
-    this.getFiestas()
+  async getDetalleCotizacion(){
+    let {fiestas} = this.state
+    let cotizaciones = []
+    for(key in fiestas)
+    {
+      let id_evento = fiestas[key]._id
+      if(fiestas[key]._id)
+      {
+        await Eventos.getCotizaciones({ id_evento }).then( (result) =>{
+          if( result && result.valid) 
+          {
+            let cotizacion = result.result
+            fiestas[key].cotizaciones = cotizacion
+            //cotizaciones.push(cotizacion)
+          }
+        })
+      }
+    }
+    this.setState({
+      fiestas,
+      isRefreshing : false
+    })
   }
-
 
   render() {  
     return (
@@ -64,9 +80,15 @@ export default class fiestas extends React.Component {
           <Text style={{color:'#8F4D93', fontSize:20, marginBottom:20, textAlign: 'center', fontWeight:'700'}}>Resumen de gastos</Text>
           <FlatList 
               data = {this.state.fiestas}
+              extraData = {this.state.fiestas}
               keyExtractor = { (item, index) => item._id}
-              refreshing={this.state.isRefreshing}
-              onRefresh={() => this.onRefresh()}
+              refreshControl={
+                <RefreshControl
+                      refreshing={this.state.isRefreshing}
+                      onRefresh={() => this.getFiestas()}
+                      colors={["#C63275"]}
+                   />
+                }
               renderItem={({ item }) => {
                 return(
                   <TouchableOpacity 
@@ -74,7 +96,8 @@ export default class fiestas extends React.Component {
                     onPress={() => this.props.navigation.navigate('servicio',{ 
                       tipoFiesta : item.categoria,
                       servicios : item.servicios_solicitados,
-                      invitados : item.adultos + item.ninos
+                      invitados : item.adultos + item.ninos,
+                      cotizaciones : item.cotizaciones
                     })}   
                   >
                     <View style={{flexDirection: 'row'}}>

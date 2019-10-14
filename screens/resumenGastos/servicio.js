@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   Image,
   Platform,
@@ -14,7 +14,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import styles from '../../assets/styles';
 import HeaderInt from '../../navigation/HeaderInt';
 
-export default class servicio extends React.Component {
+export default class servicio extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -65,7 +65,8 @@ export default class servicio extends React.Component {
                   }}
                   onPress={() => this.props.navigation.navigate('detalles',{
                     tipoFiesta : this.props.navigation.getParam('tipoFiesta',""),
-                    servicio : item
+                    servicio : item,
+                    cotizaciones : this.props.navigation.getParam("cotizaciones",[])
                   })}   
                 >
                   <Text style={{color:'#8F4D93', fontWeight:'700'}}>{item}</Text>
