@@ -15,15 +15,22 @@ export default class FormularioSteps extends React.Component  {
 
   async cotizarEvento()
   {
-    const { datosFiesta , checkboxes, navigation} = this.props.screenProps
+    const { datosFiesta , checkboxes, navigation, inputs} = this.props.screenProps
     const { tipoFiesta , nombreEvento , fechaEvento, horaEvento, adultos, ninos, direccion, distrito } = datosFiesta
     
     let servicios_solicitados = []
+    let servicios = []
     for (key in checkboxes)
     {
       if(checkboxes[key])
       {
         servicios_solicitados.push(key)
+        servicios.push({
+          [key]: {
+            detalles : inputs[key].detalles ? inputs[key].detalles : "",
+            duracion : inputs[key].duracion ? inputs[key].duracion : ""
+          }
+        })
       }
     }
     const nombre = nombreEvento
@@ -31,7 +38,7 @@ export default class FormularioSteps extends React.Component  {
     const hora_del_evento = horaEvento
     const local = false
     const categoria = tipoFiesta 
-    const servicios = []
+
     Eventos.saveFiesta( { nombre, fecha_del_evento , hora_del_evento , local , categoria , adultos, ninos, direccion, distrito, servicios_solicitados , servicios})
           .then((result) => {
             if(result && result.valid)
@@ -42,7 +49,7 @@ export default class FormularioSteps extends React.Component  {
               alert("Error intentando registrar información")
             }
             
-      })
+    })
   }
 
   render() {

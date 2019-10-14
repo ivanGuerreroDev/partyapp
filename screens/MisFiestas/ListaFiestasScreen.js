@@ -57,7 +57,6 @@ export default class ListaFiestasScreen extends React.Component {
     let cotizaciones = []
     for(key in fiestas)
     {
-      console.log(fiestas[key])
       let id_evento = fiestas[key]._id
       if(fiestas[key]._id)
       {

@@ -51,10 +51,19 @@ export default class ListaProveedoresScreen extends React.Component {
     })
     for(key in cotizaciones)
     {
-      const { id_proveedor } = cotizaciones[key]
+      const { id_proveedor , cotizacion } = cotizaciones[key]
+      let costos = 0
       await Eventos.getProveedorProfile({id_proveedor}).then((profile) => {
+            let profileObj = profile.data
             if(profile && profile.data){
-              proveedores.push(profile.data)
+              for(i in cotizacion){
+                for(node in cotizacion[i]){
+                  costos = costos + cotizacion[i][node].costo
+                }
+              }
+              profileObj.total = costos
+              proveedores.push(profileObj)
+              costos = 0
             }
       })
     }
@@ -130,7 +139,7 @@ export default class ListaProveedoresScreen extends React.Component {
                       }}
                     />
                   </View>
-                  <Text style={{color:'#333', fontWeight: '700', fontSize:20, marginLeft: 'auto'}}>S/.300</Text>
+                  <Text style={{color:'#333', fontWeight: '700', fontSize:20, marginLeft: 'auto'}}>S/. {item.total}</Text>
                 </TouchableOpacity>
                 );
               }}
